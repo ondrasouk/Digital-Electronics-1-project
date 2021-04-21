@@ -44,7 +44,7 @@ entity speedometer is
             hall_sensor_i : in STD_LOGIC;
             s_speed : out std_logic_vector(24 - 1 downto 0);
             s_distance : out std_logic_vector(20 - 1 downto 0);
-            s_kcalories : out std_logic_vector(20 - 1 downto 0);
+            s_calories : out std_logic_vector(20 - 1 downto 0);
             s_max_speed : out std_logic_vector(20 - 1 downto 0));
 end speedometer;
 
@@ -57,8 +57,6 @@ architecture Behavioral of speedometer is
     signal s_etime1_local : unsigned(16 - 1 downto 0);  -- elapsed time(n-1)
     signal s_etime2_local : unsigned(16 - 1 downto 0);  -- elapsed time(n-2)
     signal s_etime3_local : unsigned(16 - 1 downto 0);  -- elapsed time(n-3)
-    
-    signal s_actual_speed_local : unsigned(22 - 1 downto 0); -- in cm/s
     
     signal s_speed_local : unsigned(22 - 1 downto 0);       -- in cm/s
     signal s_distance_local : unsigned(22 - 1 downto 0);    -- total distance (in wheel circumferences, max.163.8375 km (250cm))
@@ -136,7 +134,7 @@ begin
             s_etime2_local <= x"FFFF";
             s_etime1_local <= x"FFFF";
             s_etime_local  <= x"FFFF";
-            s_actual_speed_local <= x"0000";
+            s_speed_local <= x"0000";
         end if;
     end process p_etime;
     
@@ -149,13 +147,18 @@ begin
     p_calc : process(hall_sensor_i)
     begin
         if rising_edge(hall_sensor_i) then
-            s_actual_speed_local <= (g_WHEEL_CIRCUMFERENCE*10000/s_etime_local + g_WHEEL_CIRCUMFERENCE*10000/s_etime1_local + g_WHEEL_CIRCUMFERENCE*10000/s_etime2_local + g_WHEEL_CIRCUMFERENCE*10000/s_etime3_local)/4; -- m*1e-6/s*1e-4=cm/s
+            s_speed_local <= (g_WHEEL_CIRCUMFERENCE*10000/s_etime_local + g_WHEEL_CIRCUMFERENCE*10000/s_etime1_local + g_WHEEL_CIRCUMFERENCE*10000/s_etime2_local + g_WHEEL_CIRCUMFERENCE*10000/s_etime3_local)/4; -- m*1e-6/s*1e-4=cm/s
             -- averageing of last four speeds (v=s/t)
-            if (s_max_speed_local < s_actual_speed_local) then
-                s_max_speed_local <= s_actual_speed_local;
+            if (s_max_speed_local < s_speed_local) then
+                s_max_speed_local <= s_speed_local;
             end if;
             s_work_local <= (((g_INERTIA_MOMENT/s_etime_local) + (g_RESISTLOAD/(s_etime_local*s_etime_local))) - (g_INERTIA_MOMENT/s_etime1_local)); -- in Joules
             s_calories_local <= s_calories_local + ((s_work_local * 1000) / 4184);
         end if;
     end process p_calc;
+    s_speed <= std_logic_vector(s_speed_local);
+    s_distance <= std_logic_vector(s_distance_local);
+    s_calories <= std_logic_vector(s_calories_local);
+    s_max_speed <= std_logic_vector(s_max_speed_local);
+    
 end Behavioral;
