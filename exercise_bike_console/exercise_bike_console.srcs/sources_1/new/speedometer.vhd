@@ -42,10 +42,10 @@ entity speedometer is
     Port (  clk : in STD_LOGIC;
             reset : in STD_LOGIC;
             hall_sensor_i : in STD_LOGIC;
-            s_speed : out std_logic_vector(24 - 1 downto 0);
-            s_distance : out std_logic_vector(20 - 1 downto 0);
-            s_calories : out std_logic_vector(20 - 1 downto 0);
-            s_max_speed : out std_logic_vector(20 - 1 downto 0));
+            s_speed : out std_logic_vector(22 - 1 downto 0);        -- in dekam/h
+            s_distance : out std_logic_vector(20 - 1 downto 0);     -- in meters
+            s_calories : out std_logic_vector(20 - 1 downto 0);     -- in cal
+            s_max_speed : out std_logic_vector(22 - 1 downto 0));   -- in dekam/h
 end speedometer;
 
 architecture Behavioral of speedometer is
@@ -59,10 +59,10 @@ architecture Behavioral of speedometer is
     signal s_etime3_local : unsigned(16 - 1 downto 0);  -- elapsed time(n-3)
     
     signal s_speed_local : unsigned(22 - 1 downto 0);       -- in cm/s
-    signal s_distance_local : unsigned(22 - 1 downto 0);    -- total distance (in wheel circumferences, max.163.8375 km (250cm))
+    signal s_distance_local : unsigned(20 - 1 downto 0);    -- total distance (in wheel circumferences, max.2621.44 km (250cm))
     signal s_calories_local : unsigned(22 - 1 downto 0);    -- sum of calories
     signal s_work_local : unsigned(16 - 1 downto 0);        -- Work needed between one rotation
-    signal s_max_speed_local : unsigned(22 - 1 downto 0);   -- in cm/s
+    signal s_max_speed_local : unsigned(20 - 1 downto 0);   -- in cm/s
     
     
     --------------------------------------------------------------------
@@ -156,9 +156,10 @@ begin
             s_calories_local <= s_calories_local + ((s_work_local * 1000) / 4184);
         end if;
     end process p_calc;
-    s_speed <= std_logic_vector(s_speed_local);
-    s_distance <= std_logic_vector(s_distance_local);
+    s_speed <= std_logic_vector(resize(s_speed_local, 22)*36);
+    s_max_speed <= std_logic_vector(resize(s_max_speed_local, 22)*36);
+    s_distance <= std_logic_vector((resize(s_distance_local, 20)*g_WHEEL_CIRCUMFERENCE)/100);
     s_calories <= std_logic_vector(s_calories_local);
-    s_max_speed <= std_logic_vector(s_max_speed_local);
+
     
 end Behavioral;
