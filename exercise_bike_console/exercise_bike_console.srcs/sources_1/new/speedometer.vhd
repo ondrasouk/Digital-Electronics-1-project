@@ -64,24 +64,6 @@ architecture Behavioral of speedometer is
     signal s_work_local : unsigned(16 - 1 downto 0);        -- Work needed between one rotation
     signal s_max_speed_local : unsigned(20 - 1 downto 0);   -- in cm/s
     
-    
-    --------------------------------------------------------------------
-    -- f_UNSIGNED_TO_DISP:
-    -- Converts 18-bit unsigned number to logic vector with width of
-    -- 20 bits, where first 4x4 bit is for four seven segment numbers
-    -- and last 4 bits is for decimal point.
-    --------------------------------------------------------------------
-    function f_UNSIGNED_TO_DISP (
-        r_number_i : in unsigned(18 - 1 downto 0))
-        return std_logic_vector is
-        variable v_DIPLAY : std_logic_vector(20 - 1 downto 0);
-    begin
-        if (r_number_i < 10000) then
-            
-        end if;
-        return v_DIPLAY;
-    end;
-
 
 begin
     --------------------------------------------------------------------
