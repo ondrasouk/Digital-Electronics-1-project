@@ -40,6 +40,6 @@ TODO
    1. [https://store.digilentinc.com/arty-a7-artix-7-fpga-development-board/](https://store.digilentinc.com/arty-a7-artix-7-fpga-development-board/)
    2. [https://reference.digilentinc.com/reference/programmable-logic/arty-a7/reference-manual](https://reference.digilentinc.com/reference/programmable-logic/arty-a7/reference-manual)
    3. [arty_a7_sch.pdf](Docs/arty_a7_sch.pdf)
-   4. [arty_a7_sch.pdf](https://dratek.cz/arduino/7702-halluv-senzor-modul-ky-024.html?gclid=Cj0KCQjwyN-DBhCDARIsAFOELTkRZ7OF-TIUvYM4dajaB7tR17BqWOsx69k_GcUOzbV9BiPjra_8NO0aAtTbEALw_wcB)
+   4. [KY-024](https://dratek.cz/docs/produkty/0/923/49e.pdf)
    
 TODO
