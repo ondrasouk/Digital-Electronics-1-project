@@ -7,7 +7,7 @@
 2. [Socha Jakub](https://github.com/xsocha00/Digital-electronics-1)
 3. [Soukeník Ondřej](https://github.com/ondrasouk/Digital-electronics-1)
 4. [Stupka Tomáš](https://github.com/ondrasouk/Digital-electronics-1)
-5. [Šomšák Martin ]()
+5. [Šomšák Martin ](https://github.com/MartinSomsak00/DE1)
 
 [Link to GitHub project folder](https://github.com/ondrasouk/Digital-Electronics-1-project)
 
