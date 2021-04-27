@@ -2,15 +2,21 @@
 
 ### Team members
 
-Smejkal Marek  Socha Jakub  Soukeník Ondřej  Stupka Tomáš  Šomšák Martin  
+1. Smejkal Marek
+2. Socha Jakub  
+3. Soukeník Ondřej  
+4. Stupka Tomáš  
+5. Šomšák Martin  
 
 [Link to GitHub project folder](https://github.com/ondrasouk/Digital-Electronics-1-project)
 
-### Project objectives
+### Úvod
 
-TODO
+Úkolem tohoto projektu je vytvořit konzoli pro měření otáček kola. Tato následně vede na rozšíření jako napříkad měření rychlosti, ujeté vzdálenosti, průměrné rychlosti atd. 
 
+V našem případě jsme se rozhodli pro snímání celého systému rozhodli použít čidlo KY-024, který obsahuje čidlo s halovou sondou
 
+Konzole pro rotoped/kolo, hallova sonda, měření a zobrazení rychlosti, ujeté vzdálenosti, atd
 ## Hardware description
 
 TODO
