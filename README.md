@@ -1,12 +1,8 @@
-# Exercise bike console
+# Konzole pro rotoped 
 
 ### Team members
 
-Smejkal Marek  
-Socha Jakub  
-Soukeník Ondřej  
-Stupka Tomáš  
-Šomšák Martin  
+Smejkal Marek  Socha Jakub  Soukeník Ondřej  Stupka Tomáš  Šomšák Martin  
 
 [Link to GitHub project folder](https://github.com/ondrasouk/Digital-Electronics-1-project)
 
