@@ -41,6 +41,6 @@ TODO
    1. [https://store.digilentinc.com/arty-a7-artix-7-fpga-development-board/](https://store.digilentinc.com/arty-a7-artix-7-fpga-development-board/)
    2. [https://reference.digilentinc.com/reference/programmable-logic/arty-a7/reference-manual](https://reference.digilentinc.com/reference/programmable-logic/arty-a7/reference-manual)
    3. [arty_a7_sch.pdf](Docs/arty_a7_sch.pdf)
-   4. [44E](https://dratek.cz/docs/produkty/0/908/a3144eu.pdf)
+   4. [44E datasheet](https://dratek.cz/docs/produkty/0/908/a3144eu.pdf)
    
 TODO
