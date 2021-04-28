@@ -1,7 +1,7 @@
 # Týmový projekt do předmětu BPC-DE1 
 # Název projektu: Konzole pro rotoped 
 
-### Team members
+### Členové týmu
 
 1. [Smejkal Marek](https://github.com/xsmejk30/Digital-electronics-1)
 2. [Socha Jakub](https://github.com/xsocha00/Digital-electronics-1)
