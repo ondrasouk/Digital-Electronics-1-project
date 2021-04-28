@@ -22,6 +22,10 @@ Pro následní zobrazení měřené veličiny byl využit 4x7 segmentový disple
 
 
 ## Programová část části
+### Teoretický popis funkčnosti
+Čidlo vždy vygeneruje klesající hranu, když kolem něj projede magnet umístěný na kole setrvačníku. V programu vstup ale invertujeme, pro snažší pochopení. Tento signál značí jednu otáčku setrvačníku, který simuluje setrvačnost jízdního kola a člověka na něm. Interval mezi klesajícími hrany tedy je doba za kterou virtuální kolo urazí jednu otočku kola. Podle vzorečku v=s/t můžeme vypočítat rychlost, kde s je virtuální vzdálenost jedné otočky setrvačníku (je tedy konstantní) a t je čas mezi signálem ze senzoru.  
+K měření času se dá použít hodinový zdroj z FPGA, ale má 10MHz, která je moc velká a aby byla použitelná pro čas ~20us musí se snížit. Pro tento účel se použije dělička časových hodin v podobě modulu clock_enable, který máme z dřívějších cvičení. Poté něčím musíme počítat jednotlivé pulzy, pro toto použijeme také ze cvičení naprogramovaný obousměrný čítač, který pro tento účel zjednodušíme a uděláme z něj jen jednoduchý čítač. Nasčítaný počet pulzů tedy odpovídá času, který trvala jedna otočka setrvačníku. Pro vyšší přesnost se při každé otočce vyresetuje i modul clock_enable.
+
 
 ```vhdl
 ```
