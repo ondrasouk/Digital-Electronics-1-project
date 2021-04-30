@@ -48,10 +48,6 @@ architecture Behavioral of tb_speedometer is
     signal s_tb_distance : std_logic_vector(22 - 1 downto 0);     -- in meters
     signal s_tb_calories : std_logic_vector(22 - 1 downto 0);     -- in cal
     signal s_tb_max_speed : std_logic_vector(22 - 1 downto 0);    -- in dekam/h
-    
-    --UUT signals
-    signal s_speed_local : std_logic_vector(22 - 1 downto 0);
-    signal s_tb_etime : std_logic_vector(16 - 1 downto 0);
 begin
     -- Connecting testbench signals with speedometer entity (Unit Under Test)
     uut_speedometer : entity work.speedometer
