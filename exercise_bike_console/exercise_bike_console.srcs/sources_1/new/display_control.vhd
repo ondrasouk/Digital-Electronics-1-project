@@ -38,8 +38,8 @@ entity display_control is
         button : in STD_LOGIC;
         leds : out std_logic_vector(5 - 1 downto 0);
         s_speed : in std_logic_vector(22 - 1 downto 0);        -- in dekam/h
-        s_distance : in std_logic_vector(20 - 1 downto 0);     -- in meters
-        s_calories : in std_logic_vector(20 - 1 downto 0);     -- in cal
+        s_distance : in std_logic_vector(22 - 1 downto 0);     -- in meters
+        s_calories : in std_logic_vector(22 - 1 downto 0);     -- in cal
         s_max_speed : in std_logic_vector(22 - 1 downto 0);   -- in dekam/h
         dp_o    : out std_logic_vector(4 - 1 downto 0);
         data3_o : out  std_logic_vector(4 - 1 downto 0);
