@@ -1,0 +1,228 @@
+----------------------------------------------------------------------------------
+-- Company: 
+-- Engineer: 
+-- 
+-- Create Date: 29.04.2021 09:34:08
+-- Design Name: 
+-- Module Name: tb_speedometer - Behavioral
+-- Project Name: 
+-- Target Devices: 
+-- Tool Versions: 
+-- Description: 
+-- 
+-- Dependencies: 
+-- 
+-- Revision:
+-- Revision 0.01 - File Created
+-- Additional Comments:
+-- 
+----------------------------------------------------------------------------------
+
+
+library IEEE;
+use IEEE.STD_LOGIC_1164.ALL;
+
+-- Uncomment the following library declaration if using
+-- arithmetic functions with Signed or Unsigned values
+--use IEEE.NUMERIC_STD.ALL;
+
+-- Uncomment the following library declaration if instantiating
+-- any Xilinx leaf cells in this code.
+--library UNISIM;
+--use UNISIM.VComponents.all;
+
+entity tb_speedometer is
+--  Port ( );
+end tb_speedometer;
+
+architecture Behavioral of tb_speedometer is
+    -- Local constants
+    constant c_CLK_100MHZ_PERIOD : time := 10 ns;
+    constant c_TIME_UNIT_LENGHT : natural := 10; --0.1ms / 1000 = 0.1us = 100ns
+
+    --Local signals
+    signal s_clk_100MHz : std_logic;
+    signal s_reset : std_logic;
+    signal s_hall_sensor : std_logic;
+    signal s_tb_speed : std_logic_vector(22 - 1 downto 0);        -- in dekam/h
+    signal s_tb_distance : std_logic_vector(22 - 1 downto 0);     -- in meters
+    signal s_tb_calories : std_logic_vector(22 - 1 downto 0);     -- in cal
+    signal s_tb_max_speed : std_logic_vector(22 - 1 downto 0);    -- in dekam/h
+    
+    --UUT signals
+    signal s_speed_local : std_logic_vector(22 - 1 downto 0);
+    signal s_tb_etime : std_logic_vector(16 - 1 downto 0);
+begin
+    -- Connecting testbench signals with speedometer entity (Unit Under Test)
+    uut_speedometer : entity work.speedometer
+        generic map(
+            g_TIME_UNIT_LENGHT  => c_TIME_UNIT_LENGHT
+        )
+        port map(
+            clk => s_clk_100MHz,
+            reset => s_reset,
+            hall_sensor_i => s_hall_sensor,
+            s_speed => s_tb_speed,
+            s_distance => s_tb_distance,
+            s_calories => s_tb_calories,
+            s_max_speed => s_tb_max_speed
+        );
+
+    --------------------------------------------------------------------
+    -- Clock generation process
+    --------------------------------------------------------------------
+    p_clk_gen : process
+    begin
+        while now < 100sec loop
+            s_clk_100MHz <= '0';
+            wait for c_CLK_100MHZ_PERIOD / 2;
+            s_clk_100MHz <= '1';
+            wait for c_CLK_100MHZ_PERIOD / 2;
+        end loop;
+        wait;
+    end process p_clk_gen;
+    
+    --------------------------------------------------------------------
+    -- Reset generation process
+    --------------------------------------------------------------------
+    p_reset_gen : process
+    begin
+        s_reset <= '0'; wait for 200 ns;
+        -- Reset activated
+        s_reset <= '1'; wait for 500 ns;
+        -- Reset deactivated
+        s_reset <= '0';
+        wait;
+    end process p_reset_gen;
+    
+    --------------------------------------------------------------------
+    -- Data generation process
+    -- Speedup from 0 to almost 10 m/s = 3600 dekam/h = 36km/h
+    --------------------------------------------------------------------
+    p_stimulus : process
+    begin
+        s_hall_sensor <= '0';
+        wait for 800ns;
+        s_hall_sensor <= '1';
+        wait for 3us;
+        s_hall_sensor <= '0';
+        wait for 1ms;
+        s_hall_sensor <= '1';
+        wait for 3us;
+        s_hall_sensor <= '0';
+        wait for 800us;
+        s_hall_sensor <= '1';
+        wait for 3us;
+        s_hall_sensor <= '0';
+        wait for 700us;
+        s_hall_sensor <= '1';
+        wait for 3us;
+        s_hall_sensor <= '0';
+        wait for 550us;
+        s_hall_sensor <= '1';
+        wait for 3us;
+        s_hall_sensor <= '0';
+        wait for 420us;
+        s_hall_sensor <= '1';
+        wait for 3us;
+        s_hall_sensor <= '0';
+        wait for 380us;
+        s_hall_sensor <= '1';
+        wait for 3us;
+        s_hall_sensor <= '0';
+        wait for 360us;
+        s_hall_sensor <= '1';
+        wait for 3us;
+        s_hall_sensor <= '0';
+        wait for 340us;
+        s_hall_sensor <= '1';
+        wait for 3us;
+        s_hall_sensor <= '0';
+        wait for 325us;
+        s_hall_sensor <= '1';
+        wait for 3us;
+        s_hall_sensor <= '0';
+        wait for 315us;
+        s_hall_sensor <= '1';
+        wait for 3us;
+        s_hall_sensor <= '0';
+        wait for 310us;
+        s_hall_sensor <= '1';
+        wait for 3us;
+        s_hall_sensor <= '0';
+        wait for 300us;
+        s_hall_sensor <= '1';
+        wait for 3us;
+        s_hall_sensor <= '0';
+        wait for 292us;
+        s_hall_sensor <= '1';
+        wait for 3us;
+        s_hall_sensor <= '0';
+        wait for 285us;
+        s_hall_sensor <= '1';
+        wait for 3us;
+        s_hall_sensor <= '0';
+        wait for 275us;
+        s_hall_sensor <= '1';
+        wait for 3us;
+        s_hall_sensor <= '0';
+        wait for 265us;
+        s_hall_sensor <= '1';
+        wait for 3us;
+        s_hall_sensor <= '0';
+        wait for 260us;
+        s_hall_sensor <= '1';
+        wait for 3us;
+        s_hall_sensor <= '0';
+        wait for 255us;
+        s_hall_sensor <= '1';
+        wait for 3us;
+        s_hall_sensor <= '0';
+        wait for 250us;
+        s_hall_sensor <= '1';
+        wait for 3us;
+        s_hall_sensor <= '0';
+        wait for 250us;
+        s_hall_sensor <= '1';
+        wait for 3us;
+        s_hall_sensor <= '0';
+        wait for 250us;
+        s_hall_sensor <= '1';
+        wait for 3us;
+        s_hall_sensor <= '0';
+        wait for 250us;
+        s_hall_sensor <= '1';
+        wait for 3us;
+        s_hall_sensor <= '0';
+        wait for 250us;
+        s_hall_sensor <= '1';
+        wait for 3us;
+        s_hall_sensor <= '0';
+        wait for 250us;
+        s_hall_sensor <= '1';
+        wait for 3us;
+        s_hall_sensor <= '0';
+        wait for 250us;
+        s_hall_sensor <= '1';
+        wait for 3us;
+        s_hall_sensor <= '0';
+        wait for 250us;
+        s_hall_sensor <= '1';
+        wait for 3us;
+        s_hall_sensor <= '0';
+        wait for 250us;
+        s_hall_sensor <= '1';
+        wait for 3us;
+        s_hall_sensor <= '0';
+        wait for 250us;
+        wait;
+    end process p_stimulus;
+    
+    --------------------------------------------------------------------
+    -- Output validation process
+    --------------------------------------------------------------------
+    tb_check : process
+    begin
+        wait;
+    end process tb_check;
+end Behavioral;
