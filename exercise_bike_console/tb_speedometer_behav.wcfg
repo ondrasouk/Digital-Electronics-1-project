@@ -3,104 +3,80 @@
    <wave_state>
    </wave_state>
    <db_ref_list>
-      <db_ref path="tb_display_control_behav.wdb" id="1">
+      <db_ref path="tb_speedometer_behav.wdb" id="1">
          <top_modules>
-            <top_module name="tb_display_control" />
+            <top_module name="tb_speedometer" />
          </top_modules>
       </db_ref>
    </db_ref_list>
    <zoom_setting>
       <ZoomStartTime time="0fs"></ZoomStartTime>
-      <ZoomEndTime time="1500001fs"></ZoomEndTime>
-      <Cursor1Time time="1500000fs"></Cursor1Time>
+      <ZoomEndTime time="10000000001fs"></ZoomEndTime>
+      <Cursor1Time time="10000000000fs"></Cursor1Time>
    </zoom_setting>
    <column_width_setting>
-      <NameColumnWidth column_width="166"></NameColumnWidth>
+      <NameColumnWidth column_width="162"></NameColumnWidth>
       <ValueColumnWidth column_width="60"></ValueColumnWidth>
    </column_width_setting>
-   <WVObjectSize size="21" />
-   <wvobject type="logic" fp_name="/tb_display_control/s_clk_100MHz">
+   <WVObjectSize size="12" />
+   <wvobject type="logic" fp_name="/tb_speedometer/s_clk_100MHz">
       <obj_property name="ElementShortName">s_clk_100MHz</obj_property>
       <obj_property name="ObjectShortName">s_clk_100MHz</obj_property>
+      <obj_property name="CustomSignalColor">#00FF7F</obj_property>
+      <obj_property name="UseCustomSignalColor">true</obj_property>
    </wvobject>
-   <wvobject type="logic" fp_name="/tb_display_control/s_button">
-      <obj_property name="ElementShortName">s_button</obj_property>
-      <obj_property name="ObjectShortName">s_button</obj_property>
-   </wvobject>
-   <wvobject type="logic" fp_name="/tb_display_control/s_reset">
+   <wvobject type="logic" fp_name="/tb_speedometer/s_reset">
       <obj_property name="ElementShortName">s_reset</obj_property>
       <obj_property name="ObjectShortName">s_reset</obj_property>
    </wvobject>
-   <wvobject type="array" fp_name="/tb_display_control/s_speed">
+   <wvobject type="logic" fp_name="/tb_speedometer/s_hall_sensor">
+      <obj_property name="ElementShortName">s_hall_sensor</obj_property>
+      <obj_property name="ObjectShortName">s_hall_sensor</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/tb_speedometer/s_speed">
       <obj_property name="ElementShortName">s_speed[21:0]</obj_property>
       <obj_property name="ObjectShortName">s_speed[21:0]</obj_property>
    </wvobject>
-   <wvobject type="array" fp_name="/tb_display_control/s_distance">
+   <wvobject type="array" fp_name="/tb_speedometer/s_distance">
       <obj_property name="ElementShortName">s_distance[21:0]</obj_property>
       <obj_property name="ObjectShortName">s_distance[21:0]</obj_property>
    </wvobject>
-   <wvobject type="array" fp_name="/tb_display_control/s_calories">
+   <wvobject type="array" fp_name="/tb_speedometer/s_calories">
       <obj_property name="ElementShortName">s_calories[21:0]</obj_property>
       <obj_property name="ObjectShortName">s_calories[21:0]</obj_property>
    </wvobject>
-   <wvobject type="array" fp_name="/tb_display_control/s_max_speed">
+   <wvobject type="array" fp_name="/tb_speedometer/s_max_speed">
       <obj_property name="ElementShortName">s_max_speed[21:0]</obj_property>
       <obj_property name="ObjectShortName">s_max_speed[21:0]</obj_property>
    </wvobject>
-   <wvobject type="array" fp_name="/tb_display_control/s_leds">
-      <obj_property name="ElementShortName">s_leds[4:0]</obj_property>
-      <obj_property name="ObjectShortName">s_leds[4:0]</obj_property>
+   <wvobject type="array" fp_name="/tb_speedometer/uut_speedometer/s_etime_local">
+      <obj_property name="ElementShortName">s_etime_local[15:0]</obj_property>
+      <obj_property name="ObjectShortName">s_etime_local[15:0]</obj_property>
+      <obj_property name="CustomSignalColor">#008000</obj_property>
+      <obj_property name="UseCustomSignalColor">true</obj_property>
    </wvobject>
-   <wvobject type="array" fp_name="/tb_display_control/s_dp">
-      <obj_property name="ElementShortName">s_dp[3:0]</obj_property>
-      <obj_property name="ObjectShortName">s_dp[3:0]</obj_property>
+   <wvobject type="array" fp_name="/tb_speedometer/uut_speedometer/s_speed_local">
+      <obj_property name="ElementShortName">s_speed_local[21:0]</obj_property>
+      <obj_property name="ObjectShortName">s_speed_local[21:0]</obj_property>
+      <obj_property name="CustomSignalColor">#008000</obj_property>
+      <obj_property name="UseCustomSignalColor">true</obj_property>
    </wvobject>
-   <wvobject type="array" fp_name="/tb_display_control/s_data3">
-      <obj_property name="ElementShortName">s_data3[3:0]</obj_property>
-      <obj_property name="ObjectShortName">s_data3[3:0]</obj_property>
+   <wvobject type="array" fp_name="/tb_speedometer/uut_speedometer/s_speed1_local">
+      <obj_property name="ElementShortName">s_speed1_local[21:0]</obj_property>
+      <obj_property name="ObjectShortName">s_speed1_local[21:0]</obj_property>
+      <obj_property name="CustomSignalColor">#008000</obj_property>
+      <obj_property name="UseCustomSignalColor">true</obj_property>
    </wvobject>
-   <wvobject type="array" fp_name="/tb_display_control/s_data2">
-      <obj_property name="ElementShortName">s_data2[3:0]</obj_property>
-      <obj_property name="ObjectShortName">s_data2[3:0]</obj_property>
+   <wvobject type="array" fp_name="/tb_speedometer/uut_speedometer/s_speed2_local">
+      <obj_property name="ElementShortName">s_speed2_local[21:0]</obj_property>
+      <obj_property name="ObjectShortName">s_speed2_local[21:0]</obj_property>
+      <obj_property name="CustomSignalColor">#008000</obj_property>
+      <obj_property name="UseCustomSignalColor">true</obj_property>
    </wvobject>
-   <wvobject type="array" fp_name="/tb_display_control/s_data1">
-      <obj_property name="ElementShortName">s_data1[3:0]</obj_property>
-      <obj_property name="ObjectShortName">s_data1[3:0]</obj_property>
-   </wvobject>
-   <wvobject type="array" fp_name="/tb_display_control/s_data0">
-      <obj_property name="ElementShortName">s_data0[3:0]</obj_property>
-      <obj_property name="ObjectShortName">s_data0[3:0]</obj_property>
-   </wvobject>
-   <wvobject type="array" fp_name="/tb_display_control/uut_display_control/s_sel_display_local">
-      <obj_property name="ElementShortName">s_sel_display_local[3:0]</obj_property>
-      <obj_property name="ObjectShortName">s_sel_display_local[3:0]</obj_property>
-   </wvobject>
-   <wvobject type="array" fp_name="/tb_display_control/uut_display_control/s_temp_local">
-      <obj_property name="ElementShortName">s_temp_local[21:0]</obj_property>
-      <obj_property name="ObjectShortName">s_temp_local[21:0]</obj_property>
-   </wvobject>
-   <wvobject type="array" fp_name="/tb_display_control/uut_display_control/s_total_time">
-      <obj_property name="ElementShortName">s_total_time[18:0]</obj_property>
-      <obj_property name="ObjectShortName">s_total_time[18:0]</obj_property>
-   </wvobject>
-   <wvobject type="logic" fp_name="/tb_display_control/uut_display_control/s_en_t">
-      <obj_property name="ElementShortName">s_en_t</obj_property>
-      <obj_property name="ObjectShortName">s_en_t</obj_property>
-   </wvobject>
-   <wvobject type="logic" fp_name="/tb_display_control/uut_display_control/s_en_r">
-      <obj_property name="ElementShortName">s_en_r</obj_property>
-      <obj_property name="ObjectShortName">s_en_r</obj_property>
-   </wvobject>
-   <wvobject type="logic" fp_name="/tb_display_control/uut_display_control/s_rst_r_local">
-      <obj_property name="ElementShortName">s_rst_r_local</obj_property>
-      <obj_property name="ObjectShortName">s_rst_r_local</obj_property>
-   </wvobject>
-   <wvobject type="other" fp_name="/tb_display_control/uut_display_control/clk_en3/s_cnt_local">
-      <obj_property name="ElementShortName">s_cnt_local</obj_property>
-      <obj_property name="ObjectShortName">s_cnt_local</obj_property>
-   </wvobject>
-   <wvobject type="array" fp_name="/tb_display_control/uut_display_control/s_rst_t_local">
-      <obj_property name="ElementShortName">s_rst_t_local[1:0]</obj_property>
-      <obj_property name="ObjectShortName">s_rst_t_local[1:0]</obj_property>
+   <wvobject type="array" fp_name="/tb_speedometer/uut_speedometer/s_speed3_local">
+      <obj_property name="ElementShortName">s_speed3_local[21:0]</obj_property>
+      <obj_property name="ObjectShortName">s_speed3_local[21:0]</obj_property>
+      <obj_property name="CustomSignalColor">#008000</obj_property>
+      <obj_property name="UseCustomSignalColor">true</obj_property>
    </wvobject>
 </wave_config>

@@ -1,7 +1,18 @@
 Vivado Simulator 2020.2
 Copyright 1986-1999, 2001-2020 Xilinx, Inc. All Rights Reserved.
-Running: /mnt/643cdda3-bbe4-4e4c-a460-95929b593fea/Xilinx/Vivado/2020.2/bin/unwrapped/lnx64.o/xelab -wto ca7177a56f2249eaa06a50e1464b7bcd --incr --debug typical --relax --mt 8 -L xil_defaultlib -L secureip --snapshot tb_display_control_behav xil_defaultlib.tb_display_control -log elaborate.log 
+Running: /mnt/643cdda3-bbe4-4e4c-a460-95929b593fea/Xilinx/Vivado/2020.2/bin/unwrapped/lnx64.o/xelab -wto ca7177a56f2249eaa06a50e1464b7bcd --incr --debug typical --relax --mt 8 -L xil_defaultlib -L secureip --snapshot tb_speedometer_behav xil_defaultlib.tb_speedometer -log elaborate.log 
 Using 8 slave threads.
 Starting static elaboration
 Completed static elaboration
-INFO: [XSIM 43-4323] No Change in HDL. Linking previously generated obj files to create kernel
+Starting simulation data flow analysis
+Completed simulation data flow analysis
+Time Resolution for simulation is 1ps
+Compiling package std.standard
+Compiling package std.textio
+Compiling package ieee.std_logic_1164
+Compiling package ieee.numeric_std
+Compiling architecture behavioral of entity xil_defaultlib.clock_enable [clock_enable_default]
+Compiling architecture behavioral of entity xil_defaultlib.cnt_up [cnt_up_default]
+Compiling architecture behavioral of entity xil_defaultlib.speedometer [\speedometer(g_time_unit_lenght=...]
+Compiling architecture behavioral of entity xil_defaultlib.tb_speedometer
+Built simulation snapshot tb_speedometer_behav

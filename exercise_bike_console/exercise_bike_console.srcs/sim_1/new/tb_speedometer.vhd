@@ -24,7 +24,7 @@ use IEEE.STD_LOGIC_1164.ALL;
 
 -- Uncomment the following library declaration if using
 -- arithmetic functions with Signed or Unsigned values
---use IEEE.NUMERIC_STD.ALL;
+use IEEE.NUMERIC_STD.ALL;
 
 -- Uncomment the following library declaration if instantiating
 -- any Xilinx leaf cells in this code.
@@ -83,9 +83,8 @@ begin
     --------------------------------------------------------------------
     p_reset_gen : process
     begin
-        s_reset <= '0'; wait for 200 ns;
         -- Reset activated
-        s_reset <= '1'; wait for 500 ns;
+        s_reset <= '1'; wait for 15ns;
         -- Reset deactivated
         s_reset <= '0';
         wait;
@@ -93,15 +92,20 @@ begin
     
     --------------------------------------------------------------------
     -- Data generation process
-    -- Speedup from 0 to almost 10 m/s = 3600 dekam/h = 36km/h
+    -- Speedup from 0 to 10 m/s = 3600 dekam/h = 36km/h
+    -- c/v=t -> 2.5/10=0.25s -> in simulation t/1000 -> 0.25ms = 250us
+    -- Note: Run the simulation for 20ms.
     --------------------------------------------------------------------
     p_stimulus : process
     begin
+        report "Stimulus begin" severity note;
         s_hall_sensor <= '0';
         wait for 800ns;
         s_hall_sensor <= '1';
         wait for 3us;
         s_hall_sensor <= '0';
+        assert (s_speed = std_logic_vector(to_unsigned(0 ,22)))
+        report "The speed should be 0.00 km/h (d_0), but it's not." severity error;
         wait for 1ms;
         s_hall_sensor <= '1';
         wait for 3us;
@@ -118,6 +122,8 @@ begin
         s_hall_sensor <= '1';
         wait for 3us;
         s_hall_sensor <= '0';
+        assert (s_distance = std_logic_vector(to_unsigned(10 ,22))) -- there is one cycle delay.
+        report "The distance should be 10m (d_10), but it's not." severity error;
         wait for 420us;
         s_hall_sensor <= '1';
         wait for 3us;
@@ -174,43 +180,53 @@ begin
         s_hall_sensor <= '1';
         wait for 3us;
         s_hall_sensor <= '0';
-        wait for 250us;
+        wait for 247us;
         s_hall_sensor <= '1';
         wait for 3us;
         s_hall_sensor <= '0';
-        wait for 250us;
+        wait for 247us;
         s_hall_sensor <= '1';
         wait for 3us;
         s_hall_sensor <= '0';
-        wait for 250us;
+        wait for 247us;
         s_hall_sensor <= '1';
         wait for 3us;
         s_hall_sensor <= '0';
-        wait for 250us;
+        wait for 247us;
         s_hall_sensor <= '1';
         wait for 3us;
         s_hall_sensor <= '0';
-        wait for 250us;
+        wait for 247us;
         s_hall_sensor <= '1';
         wait for 3us;
         s_hall_sensor <= '0';
-        wait for 250us;
+        wait for 247us;
         s_hall_sensor <= '1';
         wait for 3us;
         s_hall_sensor <= '0';
-        wait for 250us;
+        wait for 247us;
         s_hall_sensor <= '1';
         wait for 3us;
         s_hall_sensor <= '0';
-        wait for 250us;
+        wait for 247us;
         s_hall_sensor <= '1';
         wait for 3us;
         s_hall_sensor <= '0';
-        wait for 250us;
+        wait for 247us;
         s_hall_sensor <= '1';
         wait for 3us;
         s_hall_sensor <= '0';
-        wait for 250us;
+        assert (s_speed = std_logic_vector(to_unsigned(3600 ,22)))
+        report "The speed should be 36.00 km/h (d_3600), but it's not." severity error;
+        wait until now > 16ms; --wait until flywheel virtually stops
+        assert (s_speed = std_logic_vector(to_unsigned(0 ,22)))
+        report "The speed should be 0.00 km/h (d_0), but it's not." severity error;
+        -- When the speedup passed, there is nothing to test, probably everything works.
+        -- Calories is very hard to test because the division in VHDL is always rounds down. 
+        -- The number of calories is significantly lower than it should be. Normally I
+        -- would have created way to compare in some table calculator. But the exact results 
+        -- would be way off. The calories function is more like toy, than real feature.
+        report "Stimulus completed" severity note;
         wait;
     end process p_stimulus;
     
