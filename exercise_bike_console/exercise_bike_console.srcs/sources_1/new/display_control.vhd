@@ -41,15 +41,15 @@ entity display_control is
         reset : out STD_LOGIC;
         button_i : in STD_LOGIC;
         leds_o : out std_logic_vector(5 - 1 downto 0);
-        s_speed : in std_logic_vector(22 - 1 downto 0);         -- in dekam/h
-        s_distance : in std_logic_vector(22 - 1 downto 0);      -- in meters
-        s_calories : in std_logic_vector(22 - 1 downto 0);      -- in cal
-        s_max_speed : in std_logic_vector(22 - 1 downto 0);     -- in dekam/h
-        s_dp    : out std_logic_vector(4 - 1 downto 0);         -- decimal point output (leftmost bit to leftomost digit)
-        s_data3 : out  std_logic_vector(4 - 1 downto 0);        -- signal output of leftmost digit
-        s_data2 : out  std_logic_vector(4 - 1 downto 0);
-        s_data1 : out  std_logic_vector(4 - 1 downto 0);
-        s_data0 : out  std_logic_vector(4 - 1 downto 0));       -- signal output of rightmost digit
+        speed_i : in std_logic_vector(22 - 1 downto 0);         -- in dekam/h
+        distance_i : in std_logic_vector(22 - 1 downto 0);      -- in meters
+        calories_i : in std_logic_vector(22 - 1 downto 0);      -- in cal
+        max_speed_i : in std_logic_vector(22 - 1 downto 0);     -- in dekam/h
+        dp_o    : out std_logic_vector(4 - 1 downto 0);         -- decimal point output (leftmost bit to leftomost digit)
+        data3_o : out  std_logic_vector(4 - 1 downto 0);        -- signal output of leftmost digit
+        data2_o : out  std_logic_vector(4 - 1 downto 0);
+        data1_o : out  std_logic_vector(4 - 1 downto 0);
+        data0_o : out  std_logic_vector(4 - 1 downto 0));       -- signal output of rightmost digit
 end display_control;
 
 architecture Behavioral of display_control is
@@ -153,119 +153,119 @@ begin
     begin
         case s_sel_display_local is
             when x"0" => -- speed
-                s_temp_local <= unsigned(s_speed);
+                s_temp_local <= unsigned(speed_i);
                 leds_o <= b"10000";
                 if ((s_temp_local / 10000) < 1) then -- format DD.DD
-                    s_dp <= b"1011";
-                    s_data3 <= std_logic_vector(resize(s_temp_local / 1000, 4));
-                    s_data2 <= std_logic_vector(resize((s_temp_local mod 1000) / 100, 4));
-                    s_data1 <= std_logic_vector(resize((s_temp_local mod 100) / 10, 4));
-                    s_data0 <= std_logic_vector(resize(s_temp_local mod 10, 4));
+                    dp_o <= b"1011";
+                    data3_o <= std_logic_vector(resize(s_temp_local / 1000, 4));
+                    data2_o <= std_logic_vector(resize((s_temp_local mod 1000) / 100, 4));
+                    data1_o <= std_logic_vector(resize((s_temp_local mod 100) / 10, 4));
+                    data0_o <= std_logic_vector(resize(s_temp_local mod 10, 4));
                 elsif ((s_temp_local / 100000) < 1) then -- format DDD.D
-                    s_dp <= b"1101";
-                    s_data3 <= std_logic_vector(resize(s_temp_local / 10000, 4));
-                    s_data2 <= std_logic_vector(resize((s_temp_local mod 10000) / 1000, 4));
-                    s_data1 <= std_logic_vector(resize((s_temp_local mod 1000) / 100, 4));
-                    s_data0 <= std_logic_vector(resize((s_temp_local mod 100) / 10, 4));
+                    dp_o <= b"1101";
+                    data3_o <= std_logic_vector(resize(s_temp_local / 10000, 4));
+                    data2_o <= std_logic_vector(resize((s_temp_local mod 10000) / 1000, 4));
+                    data1_o <= std_logic_vector(resize((s_temp_local mod 1000) / 100, 4));
+                    data0_o <= std_logic_vector(resize((s_temp_local mod 100) / 10, 4));
                 elsif ((s_temp_local / 1000000) < 1) then -- format DDDD
-                    s_dp <= b"1111";
-                    s_data3 <= std_logic_vector(resize(s_temp_local / 100000, 4));
-                    s_data2 <= std_logic_vector(resize((s_temp_local mod 100000) / 10000, 4));
-                    s_data1 <= std_logic_vector(resize((s_temp_local mod 10000) / 1000, 4));
-                    s_data0 <= std_logic_vector(resize((s_temp_local mod 1000) / 100, 4));
+                    dp_o <= b"1111";
+                    data3_o <= std_logic_vector(resize(s_temp_local / 100000, 4));
+                    data2_o <= std_logic_vector(resize((s_temp_local mod 100000) / 10000, 4));
+                    data1_o <= std_logic_vector(resize((s_temp_local mod 10000) / 1000, 4));
+                    data0_o <= std_logic_vector(resize((s_temp_local mod 1000) / 100, 4));
                 end if;
             when x"1" => -- distance
-                s_temp_local <= unsigned(s_distance);
+                s_temp_local <= unsigned(distance_i);
                 leds_o <= b"01000";
                 if ((s_temp_local / 10000) < 1) then -- format DDD.D
-                    s_dp <= b"0111";
-                    s_data3 <= std_logic_vector(resize(s_temp_local / 1000, 4));
-                    s_data2 <= std_logic_vector(resize((s_temp_local mod 1000) / 100, 4));
-                    s_data1 <= std_logic_vector(resize((s_temp_local mod 100) / 10, 4));
-                    s_data0 <= std_logic_vector(resize(s_temp_local mod 10, 4));
+                    dp_o <= b"0111";
+                    data3_o <= std_logic_vector(resize(s_temp_local / 1000, 4));
+                    data2_o <= std_logic_vector(resize((s_temp_local mod 1000) / 100, 4));
+                    data1_o <= std_logic_vector(resize((s_temp_local mod 100) / 10, 4));
+                    data0_o <= std_logic_vector(resize(s_temp_local mod 10, 4));
                 elsif ((s_temp_local / 100000) < 1) then -- format DD.DD
-                    s_dp <= b"1011";
-                    s_data3 <= std_logic_vector(resize(s_temp_local / 10000, 4));
-                    s_data2 <= std_logic_vector(resize((s_temp_local mod 10000) / 1000, 4));
-                    s_data1 <= std_logic_vector(resize((s_temp_local mod 1000) / 100, 4));
-                    s_data0 <= std_logic_vector(resize((s_temp_local mod 100) / 10, 4));
+                    dp_o <= b"1011";
+                    data3_o <= std_logic_vector(resize(s_temp_local / 10000, 4));
+                    data2_o <= std_logic_vector(resize((s_temp_local mod 10000) / 1000, 4));
+                    data1_o <= std_logic_vector(resize((s_temp_local mod 1000) / 100, 4));
+                    data0_o <= std_logic_vector(resize((s_temp_local mod 100) / 10, 4));
                 elsif ((s_temp_local / 1000000) < 1) then -- format DDD.D
-                    s_dp <= b"1101";
-                    s_data3 <= std_logic_vector(resize(s_temp_local / 100000, 4));
-                    s_data2 <= std_logic_vector(resize((s_temp_local mod 100000) / 10000, 4));
-                    s_data1 <= std_logic_vector(resize((s_temp_local mod 10000) / 1000, 4));
-                    s_data0 <= std_logic_vector(resize((s_temp_local mod 1000) / 100, 4));
+                    dp_o <= b"1101";
+                    data3_o <= std_logic_vector(resize(s_temp_local / 100000, 4));
+                    data2_o <= std_logic_vector(resize((s_temp_local mod 100000) / 10000, 4));
+                    data1_o <= std_logic_vector(resize((s_temp_local mod 10000) / 1000, 4));
+                    data0_o <= std_logic_vector(resize((s_temp_local mod 1000) / 100, 4));
                 elsif ((s_temp_local / 10000000) < 1) then -- format DDDD
-                    s_dp <= b"1111";
-                    s_data3 <= std_logic_vector(resize(s_temp_local / 1000000, 4));
-                    s_data2 <= std_logic_vector(resize((s_temp_local mod 1000000) / 100000, 4));
-                    s_data1 <= std_logic_vector(resize((s_temp_local mod 100000) / 10000, 4));
-                    s_data0 <= std_logic_vector(resize((s_temp_local mod 10000) / 1000, 4));
+                    dp_o <= b"1111";
+                    data3_o <= std_logic_vector(resize(s_temp_local / 1000000, 4));
+                    data2_o <= std_logic_vector(resize((s_temp_local mod 1000000) / 100000, 4));
+                    data1_o <= std_logic_vector(resize((s_temp_local mod 100000) / 10000, 4));
+                    data0_o <= std_logic_vector(resize((s_temp_local mod 10000) / 1000, 4));
                 end if;
             when x"2" => -- distance
-                s_temp_local <= unsigned(s_calories);
+                s_temp_local <= unsigned(calories_i);
                 leds_o <= b"00100";
                 if ((s_temp_local / 10000) < 1) then -- format DDD.D
-                    s_dp <= b"0111";
-                    s_data3 <= std_logic_vector(resize(s_temp_local / 1000, 4));
-                    s_data2 <= std_logic_vector(resize((s_temp_local mod 1000) / 100, 4));
-                    s_data1 <= std_logic_vector(resize((s_temp_local mod 100) / 10, 4));
-                    s_data0 <= std_logic_vector(resize(s_temp_local mod 10, 4));
+                    dp_o <= b"0111";
+                    data3_o <= std_logic_vector(resize(s_temp_local / 1000, 4));
+                    data2_o <= std_logic_vector(resize((s_temp_local mod 1000) / 100, 4));
+                    data1_o <= std_logic_vector(resize((s_temp_local mod 100) / 10, 4));
+                    data0_o <= std_logic_vector(resize(s_temp_local mod 10, 4));
                 elsif ((s_temp_local / 100000) < 1) then -- format DD.DD
-                    s_dp <= b"1011";
-                    s_data3 <= std_logic_vector(resize(s_temp_local / 10000, 4));
-                    s_data2 <= std_logic_vector(resize((s_temp_local mod 10000) / 1000, 4));
-                    s_data1 <= std_logic_vector(resize((s_temp_local mod 1000) / 100, 4));
-                    s_data0 <= std_logic_vector(resize((s_temp_local mod 100) / 10, 4));
+                    dp_o <= b"1011";
+                    data3_o <= std_logic_vector(resize(s_temp_local / 10000, 4));
+                    data2_o <= std_logic_vector(resize((s_temp_local mod 10000) / 1000, 4));
+                    data1_o <= std_logic_vector(resize((s_temp_local mod 1000) / 100, 4));
+                    data0_o <= std_logic_vector(resize((s_temp_local mod 100) / 10, 4));
                 elsif ((s_temp_local / 1000000) < 1) then -- format DDD.D
-                    s_dp <= b"1101";
-                    s_data3 <= std_logic_vector(resize(s_temp_local / 100000, 4));
-                    s_data2 <= std_logic_vector(resize((s_temp_local mod 100000) / 10000, 4));
-                    s_data1 <= std_logic_vector(resize((s_temp_local mod 10000) / 1000, 4));
-                    s_data0 <= std_logic_vector(resize((s_temp_local mod 1000) / 100, 4));
+                    dp_o <= b"1101";
+                    data3_o <= std_logic_vector(resize(s_temp_local / 100000, 4));
+                    data2_o <= std_logic_vector(resize((s_temp_local mod 100000) / 10000, 4));
+                    data1_o <= std_logic_vector(resize((s_temp_local mod 10000) / 1000, 4));
+                    data0_o <= std_logic_vector(resize((s_temp_local mod 1000) / 100, 4));
                 elsif ((s_temp_local / 10000000) < 1) then -- format DDDD
-                    s_dp <= b"1111";
-                    s_data3 <= std_logic_vector(resize(s_temp_local / 1000000, 4));
-                    s_data2 <= std_logic_vector(resize((s_temp_local mod 1000000) / 100000, 4));
-                    s_data1 <= std_logic_vector(resize((s_temp_local mod 100000) / 10000, 4));
-                    s_data0 <= std_logic_vector(resize((s_temp_local mod 10000) / 1000, 4));
+                    dp_o <= b"1111";
+                    data3_o <= std_logic_vector(resize(s_temp_local / 1000000, 4));
+                    data2_o <= std_logic_vector(resize((s_temp_local mod 1000000) / 100000, 4));
+                    data1_o <= std_logic_vector(resize((s_temp_local mod 100000) / 10000, 4));
+                    data0_o <= std_logic_vector(resize((s_temp_local mod 10000) / 1000, 4));
                 end if;
             when x"3" => -- total time
                 leds_o <= b"00010";
                 if (s_total_time < 3600) then -- MM.SS
-                    s_dp <= b"1011";
-                    s_data3 <= std_logic_vector(resize((s_total_time / 60) / 10, 4));
-                    s_data2 <= std_logic_vector(resize((s_total_time / 60) mod 10, 4));
-                    s_data1 <= std_logic_vector(resize((s_total_time mod 60) / 10, 4));
-                    s_data0 <= std_logic_vector(resize((s_total_time mod 60) mod 10, 4));
+                    dp_o <= b"1011";
+                    data3_o <= std_logic_vector(resize((s_total_time / 60) / 10, 4));
+                    data2_o <= std_logic_vector(resize((s_total_time / 60) mod 10, 4));
+                    data1_o <= std_logic_vector(resize((s_total_time mod 60) / 10, 4));
+                    data0_o <= std_logic_vector(resize((s_total_time mod 60) mod 10, 4));
                 else -- HH.MM
-                    s_dp <= b"1011";
-                    s_data3 <= std_logic_vector(resize((s_total_time / 3600) / 10, 4));
-                    s_data2 <= std_logic_vector(resize((s_total_time / 3600) mod 10, 4));
-                    s_data1 <= std_logic_vector(resize(((s_total_time mod 3600) / 60) / 10, 4));
-                    s_data0 <= std_logic_vector(resize(((s_total_time mod 3600) / 60) mod 10, 4));
+                    dp_o <= b"1011";
+                    data3_o <= std_logic_vector(resize((s_total_time / 3600) / 10, 4));
+                    data2_o <= std_logic_vector(resize((s_total_time / 3600) mod 10, 4));
+                    data1_o <= std_logic_vector(resize(((s_total_time mod 3600) / 60) / 10, 4));
+                    data0_o <= std_logic_vector(resize(((s_total_time mod 3600) / 60) mod 10, 4));
                 end if;
             when x"4" => -- maximal speed
-                s_temp_local <= unsigned(s_max_speed);
+                s_temp_local <= unsigned(max_speed_i);
                 leds_o <= b"00001";
                 if ((s_temp_local / 10000) < 1) then -- format DD.DD
-                    s_dp <= b"1011";
-                    s_data3 <= std_logic_vector(resize(s_temp_local / 1000, 4));
-                    s_data2 <= std_logic_vector(resize((s_temp_local mod 1000) / 100, 4));
-                    s_data1 <= std_logic_vector(resize((s_temp_local mod 100) / 10, 4));
-                    s_data0 <= std_logic_vector(resize(s_temp_local mod 10, 4));
+                    dp_o <= b"1011";
+                    data3_o <= std_logic_vector(resize(s_temp_local / 1000, 4));
+                    data2_o <= std_logic_vector(resize((s_temp_local mod 1000) / 100, 4));
+                    data1_o <= std_logic_vector(resize((s_temp_local mod 100) / 10, 4));
+                    data0_o <= std_logic_vector(resize(s_temp_local mod 10, 4));
                 elsif ((s_temp_local / 100000) < 1) then -- format DDD.D
-                    s_dp <= b"1101";
-                    s_data3 <= std_logic_vector(resize(s_temp_local / 10000, 4));
-                    s_data2 <= std_logic_vector(resize((s_temp_local mod 10000) / 1000, 4));
-                    s_data1 <= std_logic_vector(resize((s_temp_local mod 1000) / 100, 4));
-                    s_data0 <= std_logic_vector(resize((s_temp_local mod 100) / 10, 4));
+                    dp_o <= b"1101";
+                    data3_o <= std_logic_vector(resize(s_temp_local / 10000, 4));
+                    data2_o <= std_logic_vector(resize((s_temp_local mod 10000) / 1000, 4));
+                    data1_o <= std_logic_vector(resize((s_temp_local mod 1000) / 100, 4));
+                    data0_o <= std_logic_vector(resize((s_temp_local mod 100) / 10, 4));
                 elsif ((s_temp_local / 1000000) < 1) then -- format DDDD
-                    s_dp <= b"1111";
-                    s_data3 <= std_logic_vector(resize(s_temp_local / 100000, 4));
-                    s_data2 <= std_logic_vector(resize((s_temp_local mod 100000) / 10000, 4));
-                    s_data1 <= std_logic_vector(resize((s_temp_local mod 10000) / 1000, 4));
-                    s_data0 <= std_logic_vector(resize((s_temp_local mod 1000) / 100, 4));
+                    dp_o <= b"1111";
+                    data3_o <= std_logic_vector(resize(s_temp_local / 100000, 4));
+                    data2_o <= std_logic_vector(resize((s_temp_local mod 100000) / 10000, 4));
+                    data1_o <= std_logic_vector(resize((s_temp_local mod 10000) / 1000, 4));
+                    data0_o <= std_logic_vector(resize((s_temp_local mod 1000) / 100, 4));
                 end if;
             when others => -- there are no other states.
         end case;

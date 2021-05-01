@@ -44,10 +44,10 @@ architecture Behavioral of tb_speedometer is
     signal s_clk_100MHz : std_logic;
     signal s_reset : std_logic;
     signal s_hall_sensor : std_logic;
-    signal s_tb_speed : std_logic_vector(22 - 1 downto 0);        -- in dekam/h
-    signal s_tb_distance : std_logic_vector(22 - 1 downto 0);     -- in meters
-    signal s_tb_calories : std_logic_vector(22 - 1 downto 0);     -- in cal
-    signal s_tb_max_speed : std_logic_vector(22 - 1 downto 0);    -- in dekam/h
+    signal s_speed : std_logic_vector(22 - 1 downto 0);        -- in dekam/h
+    signal s_distance : std_logic_vector(22 - 1 downto 0);     -- in meters
+    signal s_calories : std_logic_vector(22 - 1 downto 0);     -- in cal
+    signal s_max_speed : std_logic_vector(22 - 1 downto 0);    -- in dekam/h
 begin
     -- Connecting testbench signals with speedometer entity (Unit Under Test)
     uut_speedometer : entity work.speedometer
@@ -58,10 +58,10 @@ begin
             clk => s_clk_100MHz,
             reset => s_reset,
             hall_sensor_i => s_hall_sensor,
-            s_speed => s_tb_speed,
-            s_distance => s_tb_distance,
-            s_calories => s_tb_calories,
-            s_max_speed => s_tb_max_speed
+            speed_o => s_speed,
+            distance_o => s_distance,
+            calories_o => s_calories,
+            max_speed_o => s_max_speed
         );
 
     --------------------------------------------------------------------

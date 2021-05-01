@@ -43,10 +43,10 @@ entity speedometer is
     Port (  clk : in STD_LOGIC;
             reset : in STD_LOGIC;
             hall_sensor_i : in STD_LOGIC;
-            s_speed : out std_logic_vector(22 - 1 downto 0);        -- in dekam/h
-            s_distance : out std_logic_vector(22 - 1 downto 0);     -- in meters
-            s_calories : out std_logic_vector(22 - 1 downto 0);     -- in cal
-            s_max_speed : out std_logic_vector(22 - 1 downto 0));   -- in dekam/h
+            speed_o : out std_logic_vector(22 - 1 downto 0);        -- in dekam/h
+            distance_o : out std_logic_vector(22 - 1 downto 0);     -- in meters
+            calories_o : out std_logic_vector(22 - 1 downto 0);     -- in cal
+            max_speed_o : out std_logic_vector(22 - 1 downto 0));   -- in dekam/h
 end speedometer;
 
 architecture Behavioral of speedometer is
@@ -159,10 +159,10 @@ begin
         end if;
     end process p_calc;
     
-    s_speed <= std_logic_vector(resize(resize(s_avg_speed_local*36, 26)/10, 22));
-    s_max_speed <= std_logic_vector(resize(resize(s_max_speed_local*36, 26)/10, 22));
-    s_distance <= std_logic_vector(resize(resize(s_distance_local * g_WHEEL_CIRCUMFERENCE, 30) / 100, 22));
-    s_calories <= std_logic_vector(s_calories_local);
+    speed_o <= std_logic_vector(resize(resize(s_avg_speed_local*36, 26)/10, 22));
+    max_speed_o <= std_logic_vector(resize(resize(s_max_speed_local*36, 26)/10, 22));
+    distance_o <= std_logic_vector(resize(resize(s_distance_local * g_WHEEL_CIRCUMFERENCE, 30) / 100, 22));
+    calories_o <= std_logic_vector(s_calories_local);
     
     
 end Behavioral;
