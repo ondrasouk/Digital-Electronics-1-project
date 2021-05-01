@@ -33,13 +33,76 @@ use IEEE.STD_LOGIC_1164.ALL;
 
 entity top is
     Port (
-        CLK100MHZ : in STD_LOGIC
+        CLK100MHZ   : in STD_LOGIC;
+        --
+        btn0        : in STD_LOGIC
     );
 end top;
 
 architecture Behavioral of top is
+    -- internal reset
+    signal s_reset : std_logic;
+    
+    signal s_speed : std_logic_vector(22 - 1 downto 0);
+    signal s_distance : std_logic_vector(22 - 1 downto 0);
+    signal s_calories : std_logic_vector(22 - 1 downto 0);
+    signal s_max_speed : std_logic_vector(22 - 1 downto 0);
+    
+    signal s_dp : std_logic_vector(4 - 1 downto 0);
+    signal s_data0 : std_logic_vector(4 - 1 downto 0);
+    signal s_data1 : std_logic_vector(4 - 1 downto 0);
+    signal s_data2 : std_logic_vector(4 - 1 downto 0);
+    signal s_data3 : std_logic_vector(4 - 1 downto 0);
 
 begin
 
+    --------------------------------------------------------------------
+    -- Instance (copy) of driver_7seg_4digits entity
+    speedometer : entity work.speedometer
+        port map(
+            clk         => CLK100MHZ,
+            reset       => s_reset,
+            --hall_sensor_i => X,
+            speed_o     => s_speed,
+            distance_o  => s_distance,
+            calories_o  => s_calories,
+            max_speed_o => s_max_speed
+        );
+        
+    --------------------------------------------------------------------
+    -- Instance (copy) of driver_7seg_4digits entity
+    display_control : entity work.display_control
+        port map(
+            clk         => CLK100MHZ,
+            speed_i     => s_speed,
+            distance_i  => s_distance,
+            calories_i  => s_calories,
+            max_speed_i => s_max_speed,
+            button_i    => btn0,
+            
+            reset       => s_reset
+        );
+
+    --------------------------------------------------------------------
+    -- Instance (copy) of driver_7seg_4digits entity
+    driver_seg_4 : entity work.driver_7seg_4digits
+        port map(
+            clk         => CLK100MHZ,
+            reset       => s_reset,
+            data0_i     => s_data0,
+            data1_i     => s_data1,
+            data2_i     => s_data2,
+            data3_i     => s_data3,
+            dp_i        =>  s_dp
+            --seg_o(6)    => CA,
+            --seg_o(5)    => CB,
+            --seg_o(4)    => CC,
+            --seg_o(3)    => CD,
+            --seg_o(2)    => CE,
+            --seg_o(1)    => CF,
+            --seg_o(0)    => CG,
+            --dp_o        => DP,
+            --dig_o       => AN(3 downto 0)
+        );
 
 end Behavioral;
