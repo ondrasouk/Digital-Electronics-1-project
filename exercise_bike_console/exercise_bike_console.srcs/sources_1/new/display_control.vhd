@@ -118,7 +118,7 @@ begin
     -- Counter reacting for falling edge of button and when long press
     -- (8s) s_reset sets on and then off.
     --------------------------------------------------------------------
-    p_display_selection : process(clk, button_i)
+    p_display_selection : process(clk, button_i, s_en_r)
     begin
         if rising_edge(button_i) then
             s_rst_r_local <= '0';
@@ -148,6 +148,8 @@ begin
     -- p_display_control:
     -- Converts input number to format that is compatible with 
     -- driver_7seg_4digits and displays only one number.
+    -- note:
+    --   The omitted numbers is rounded down so 155.79 km -> 155.7 km.
     --------------------------------------------------------------------
     p_display_control : process(clk)
     begin
@@ -173,11 +175,17 @@ begin
                     data2_o <= std_logic_vector(resize((s_temp_local mod 100000) / 10000, 4));
                     data1_o <= std_logic_vector(resize((s_temp_local mod 10000) / 1000, 4));
                     data0_o <= std_logic_vector(resize((s_temp_local mod 1000) / 100, 4));
+                else -- for higher numbers display only 9999
+                    dp_o <= b"1111";
+                    data3_o <= x"9";
+                    data2_o <= x"9";
+                    data1_o <= x"9";
+                    data0_o <= x"9";
                 end if;
             when x"1" => -- distance
                 s_temp_local <= unsigned(distance_i);
                 leds_o <= b"01000";
-                if ((s_temp_local / 10000) < 1) then -- format DDD.D
+                if ((s_temp_local / 10000) < 1) then -- format D.DDD
                     dp_o <= b"0111";
                     data3_o <= std_logic_vector(resize(s_temp_local / 1000, 4));
                     data2_o <= std_logic_vector(resize((s_temp_local mod 1000) / 100, 4));
@@ -202,10 +210,10 @@ begin
                     data1_o <= std_logic_vector(resize((s_temp_local mod 100000) / 10000, 4));
                     data0_o <= std_logic_vector(resize((s_temp_local mod 10000) / 1000, 4));
                 end if;
-            when x"2" => -- distance
+            when x"2" => -- kcalories
                 s_temp_local <= unsigned(calories_i);
                 leds_o <= b"00100";
-                if ((s_temp_local / 10000) < 1) then -- format DDD.D
+                if ((s_temp_local / 10000) < 1) then -- format D.DDD
                     dp_o <= b"0111";
                     data3_o <= std_logic_vector(resize(s_temp_local / 1000, 4));
                     data2_o <= std_logic_vector(resize((s_temp_local mod 1000) / 100, 4));
@@ -266,6 +274,12 @@ begin
                     data2_o <= std_logic_vector(resize((s_temp_local mod 100000) / 10000, 4));
                     data1_o <= std_logic_vector(resize((s_temp_local mod 10000) / 1000, 4));
                     data0_o <= std_logic_vector(resize((s_temp_local mod 1000) / 100, 4));
+                else -- for higher numbers display only 9999
+                    dp_o <= b"1111";
+                    data3_o <= x"9";
+                    data2_o <= x"9";
+                    data1_o <= x"9";
+                    data0_o <= x"9";
                 end if;
             when others => -- there are no other states.
         end case;

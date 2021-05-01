@@ -4,16 +4,4 @@ Running: /mnt/643cdda3-bbe4-4e4c-a460-95929b593fea/Xilinx/Vivado/2020.2/bin/unwr
 Using 8 slave threads.
 Starting static elaboration
 Completed static elaboration
-Starting simulation data flow analysis
-Completed simulation data flow analysis
-Time Resolution for simulation is 1ps
-Compiling package std.standard
-Compiling package std.textio
-Compiling package ieee.std_logic_1164
-Compiling package ieee.numeric_std
-Compiling architecture behavioral of entity xil_defaultlib.clock_enable [\clock_enable(g_max=1000)\]
-Compiling architecture behavioral of entity xil_defaultlib.clock_enable [\clock_enable(g_max=2000)\]
-Compiling architecture behavioral of entity xil_defaultlib.cnt_up [\cnt_up(g_cnt_width=19)\]
-Compiling architecture behavioral of entity xil_defaultlib.display_control [\display_control(g_clk_div_sec=1...]
-Compiling architecture behavioral of entity xil_defaultlib.tb_display_control
-Built simulation snapshot tb_display_control_behav
+INFO: [XSIM 43-4323] No Change in HDL. Linking previously generated obj files to create kernel
