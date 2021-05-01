@@ -3,64 +3,96 @@
    <wave_state>
    </wave_state>
    <db_ref_list>
-      <db_ref path="tb_speedometer_behav.wdb" id="1">
+      <db_ref path="tb_display_control_behav.wdb" id="1">
          <top_modules>
-            <top_module name="tb_speedometer" />
+            <top_module name="tb_display_control" />
          </top_modules>
       </db_ref>
    </db_ref_list>
    <zoom_setting>
-      <ZoomStartTime time="4336639136fs"></ZoomStartTime>
-      <ZoomEndTime time="5910639137fs"></ZoomEndTime>
-      <Cursor1Time time="5108639136fs"></Cursor1Time>
+      <ZoomStartTime time="0fs"></ZoomStartTime>
+      <ZoomEndTime time="395501fs"></ZoomEndTime>
+      <Cursor1Time time="264000fs"></Cursor1Time>
    </zoom_setting>
    <column_width_setting>
       <NameColumnWidth column_width="166"></NameColumnWidth>
-      <ValueColumnWidth column_width="72"></ValueColumnWidth>
+      <ValueColumnWidth column_width="68"></ValueColumnWidth>
    </column_width_setting>
-   <WVObjectSize size="11" />
-   <wvobject type="logic" fp_name="/tb_speedometer/s_clk_100MHz">
+   <WVObjectSize size="19" />
+   <wvobject type="logic" fp_name="/tb_display_control/s_clk_100MHz">
       <obj_property name="ElementShortName">s_clk_100MHz</obj_property>
       <obj_property name="ObjectShortName">s_clk_100MHz</obj_property>
    </wvobject>
-   <wvobject type="logic" fp_name="/tb_speedometer/s_reset">
+   <wvobject type="logic" fp_name="/tb_display_control/s_button">
+      <obj_property name="ElementShortName">s_button</obj_property>
+      <obj_property name="ObjectShortName">s_button</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/tb_display_control/s_reset">
       <obj_property name="ElementShortName">s_reset</obj_property>
       <obj_property name="ObjectShortName">s_reset</obj_property>
    </wvobject>
-   <wvobject type="logic" fp_name="/tb_speedometer/uut_speedometer/s_rst_t">
-      <obj_property name="ElementShortName">s_rst_t</obj_property>
-      <obj_property name="ObjectShortName">s_rst_t</obj_property>
-   </wvobject>
-   <wvobject type="logic" fp_name="/tb_speedometer/s_hall_sensor">
-      <obj_property name="ElementShortName">s_hall_sensor</obj_property>
-      <obj_property name="ObjectShortName">s_hall_sensor</obj_property>
-   </wvobject>
-   <wvobject type="array" fp_name="/tb_speedometer/s_tb_speed">
+   <wvobject type="array" fp_name="/tb_display_control/s_tb_speed">
       <obj_property name="ElementShortName">s_tb_speed[21:0]</obj_property>
       <obj_property name="ObjectShortName">s_tb_speed[21:0]</obj_property>
    </wvobject>
-   <wvobject type="array" fp_name="/tb_speedometer/s_tb_distance">
+   <wvobject type="array" fp_name="/tb_display_control/s_tb_distance">
       <obj_property name="ElementShortName">s_tb_distance[21:0]</obj_property>
       <obj_property name="ObjectShortName">s_tb_distance[21:0]</obj_property>
    </wvobject>
-   <wvobject type="array" fp_name="/tb_speedometer/s_tb_calories">
+   <wvobject type="array" fp_name="/tb_display_control/s_tb_calories">
       <obj_property name="ElementShortName">s_tb_calories[21:0]</obj_property>
       <obj_property name="ObjectShortName">s_tb_calories[21:0]</obj_property>
    </wvobject>
-   <wvobject type="array" fp_name="/tb_speedometer/s_tb_max_speed">
+   <wvobject type="array" fp_name="/tb_display_control/s_tb_max_speed">
       <obj_property name="ElementShortName">s_tb_max_speed[21:0]</obj_property>
       <obj_property name="ObjectShortName">s_tb_max_speed[21:0]</obj_property>
    </wvobject>
-   <wvobject type="array" fp_name="/tb_speedometer/uut_speedometer/s_etime">
-      <obj_property name="ElementShortName">s_etime[15:0]</obj_property>
-      <obj_property name="ObjectShortName">s_etime[15:0]</obj_property>
+   <wvobject type="array" fp_name="/tb_display_control/s_leds">
+      <obj_property name="ElementShortName">s_leds[4:0]</obj_property>
+      <obj_property name="ObjectShortName">s_leds[4:0]</obj_property>
    </wvobject>
-   <wvobject type="array" fp_name="/tb_speedometer/uut_speedometer/s_etime_local">
-      <obj_property name="ElementShortName">s_etime_local[15:0]</obj_property>
-      <obj_property name="ObjectShortName">s_etime_local[15:0]</obj_property>
+   <wvobject type="array" fp_name="/tb_display_control/s_tb_dp">
+      <obj_property name="ElementShortName">s_tb_dp[3:0]</obj_property>
+      <obj_property name="ObjectShortName">s_tb_dp[3:0]</obj_property>
    </wvobject>
-   <wvobject type="array" fp_name="/tb_speedometer/uut_speedometer/s_speed_local">
-      <obj_property name="ElementShortName">s_speed_local[21:0]</obj_property>
-      <obj_property name="ObjectShortName">s_speed_local[21:0]</obj_property>
+   <wvobject type="array" fp_name="/tb_display_control/s_tb_data3">
+      <obj_property name="ElementShortName">s_tb_data3[3:0]</obj_property>
+      <obj_property name="ObjectShortName">s_tb_data3[3:0]</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/tb_display_control/s_tb_data2">
+      <obj_property name="ElementShortName">s_tb_data2[3:0]</obj_property>
+      <obj_property name="ObjectShortName">s_tb_data2[3:0]</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/tb_display_control/s_tb_data1">
+      <obj_property name="ElementShortName">s_tb_data1[3:0]</obj_property>
+      <obj_property name="ObjectShortName">s_tb_data1[3:0]</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/tb_display_control/s_tb_data0">
+      <obj_property name="ElementShortName">s_tb_data0[3:0]</obj_property>
+      <obj_property name="ObjectShortName">s_tb_data0[3:0]</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/tb_display_control/uut_display_control/s_sel_display_local">
+      <obj_property name="ElementShortName">s_sel_display_local[3:0]</obj_property>
+      <obj_property name="ObjectShortName">s_sel_display_local[3:0]</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/tb_display_control/uut_display_control/s_temp_local">
+      <obj_property name="ElementShortName">s_temp_local[21:0]</obj_property>
+      <obj_property name="ObjectShortName">s_temp_local[21:0]</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/tb_display_control/uut_display_control/s_total_time">
+      <obj_property name="ElementShortName">s_total_time[18:0]</obj_property>
+      <obj_property name="ObjectShortName">s_total_time[18:0]</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/tb_display_control/uut_display_control/s_en_t">
+      <obj_property name="ElementShortName">s_en_t</obj_property>
+      <obj_property name="ObjectShortName">s_en_t</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/tb_display_control/uut_display_control/s_en_r">
+      <obj_property name="ElementShortName">s_en_r</obj_property>
+      <obj_property name="ObjectShortName">s_en_r</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/tb_display_control/uut_display_control/s_rst_r_local">
+      <obj_property name="ElementShortName">s_rst_r_local</obj_property>
+      <obj_property name="ObjectShortName">s_rst_r_local</obj_property>
    </wvobject>
 </wave_config>
