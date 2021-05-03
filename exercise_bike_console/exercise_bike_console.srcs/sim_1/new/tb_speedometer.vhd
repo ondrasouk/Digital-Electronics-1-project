@@ -223,18 +223,7 @@ begin
         report "The speed should be 0.00 km/h (d_0), but it's not." severity error;
         -- When the speedup passed, there is nothing to test, probably everything works.
         -- Calories is very hard to test because the division in VHDL is always rounds down. 
-        -- The number of calories is significantly lower than it should be. Normally I
-        -- would have created way to compare in some table calculator. But the exact results 
-        -- would be way off. The calories function is more like toy, than real feature.
         report "Stimulus completed" severity note;
         wait;
     end process p_stimulus;
-    
-    --------------------------------------------------------------------
-    -- Output validation process
-    --------------------------------------------------------------------
-    tb_check : process
-    begin
-        wait;
-    end process tb_check;
 end Behavioral;

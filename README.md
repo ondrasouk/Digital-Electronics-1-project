@@ -142,6 +142,249 @@ Proces `p_calc` v normálním chodu (není nastaven `reset` ani `s_etime_local` 
 
 Přiřazování hodnot je jen převod na jednotky vhodnější k použití v displeji. Např. z *cm/s* převádíme do desítek metrů za hodinu (násobíme 3.6). Vzdálenost je násobení počtu otočení setrvačníku a obvodu virtuálního kola, kde výsledek je v metrech. Jouly převádíme na kalorie, které jsou větší a častěji se používají na cvičících strojích, kde jsou v kilokaloriích.
 
+#### Simulace 
+V simulaci je simulován postupné zrychlení na 10 m/s (36 km/h) a poté prudké zastavení, kde se testuje vynulování po dlouhé době bez hrany. Mohlo by se toho testovat více např. po každém pulzu ze senzoru rychlost nebo tak, ale myslím, že vizuální kontrola výsledků je jednodušší a rychlejší. Kontroluje se tedy jen rychlost na začátku po jednom pulzu (test jestli funguje správně `s_skip`), vzdálenost po ujetých deseti metrech a rychlost při konstantní rychlosti. Dělička hodinového signálu je nastavena na tisícinu normální hodnoty, aby simulace netrvala extrémně dlouho (místo 20 s je to 20 ms).
+
+![](images/speedometer_sim1.jpg)
+
+Na Obrázku ze simulace můžeme vidět rozběhnutí. Odpor a moment hybnosti jsem počítal jako rychlost pohybujícího se dospělého a kola - 80 kg a odpor jsem počítal, aby při 36 km/h byl potřebný výkon dodávaný na šlapátka 80 W. 
+
+Podle kinetické energie hmotného bodu Eₖ&nbsp;=&nbsp;1/2&nbsp;m&nbsp;v² (v = o/T; o - obvod kola)si můžeme odvodit jaké parametry musí mít moment setrvačnosti J. Poté můžeme nastavit odpor na nulu a pozorovat, že do celkem přesně výjde vypočítaný výkon na konci rozběhu. Délka rozběhu byla volená daleko kratší než by byla v reálných podmínkách, ale účel to splní. Kvůli zaokrouhlování při dělení vždy dolů bude chyba mířit také dolů a výsledek bude o trochu menší než očekávání.
+
+![](images/speedometer_sim2.jpg)
+
+Na druhém obrázku vidíme správnou funkci vynulování rychlostí.
+### Převádění vypočtených hodnot do formátu pro driver sedmi segmentového displeje
+
+
+#### Náhled na kód v architecture display_control.vhdl
+```vhdl
+    --------------------------------------------------------------------
+    -- Instance (copy) of clock_enable entity
+    clk_en2 : entity work.clock_enable
+        generic map(
+            g_MAX => g_clk_div_sec
+        )
+        port map(
+            clk => clk,
+            reset => s_reset,
+            ce_o => s_en_t
+        );
+    --------------------------------------------------------------------
+    -- Instance (copy) of clock_enable entity
+    clk_en3 : entity work.clock_enable
+        generic map(
+            g_MAX => g_time_for_reset
+        )
+        port map(
+            clk => clk,
+            reset => s_rst_r_local,
+            ce_o => s_en_r
+        );
+
+    --------------------------------------------------------------------
+    -- Instance (copy) of cnt_up entity
+    bin_cnt1 : entity work.cnt_up
+        generic map(
+            g_CNT_WIDTH => 19
+        )
+        port map(
+            clk => clk,
+            reset => s_reset,
+            en_i => s_en_t,
+            unsigned(cnt_o) => s_total_time
+        );
+
+
+    --------------------------------------------------------------------
+    -- p_total_time:
+    -- Counter counting seconds.
+    --------------------------------------------------------------------
+    p_total_time : process(s_en_t, s_reset)
+    begin
+        if rising_edge(s_reset) then
+            s_total_time <= (others => '0');
+        elsif rising_edge(s_en_t) then
+            s_total_time <= s_total_time + 1;
+        end if;
+    end process p_total_time;
+    
+    
+    --------------------------------------------------------------------
+    -- p_display_selection:
+    -- Counter reacting for falling edge of button and when long press
+    -- (8s) s_reset sets on and then off.
+    --------------------------------------------------------------------
+    p_display_selection : process(clk, button_i, s_en_r)
+    begin
+        if rising_edge(button_i) then
+            s_rst_r_local <= '0';
+        elsif falling_edge(button_i) then
+            s_sel_display_local <= s_sel_display_local + 1;
+            if (s_sel_display_local > x"3") then
+                s_sel_display_local <= x"0";
+            end if;
+            s_rst_r_local <= '1';
+            s_rst_t_local <= "00";
+        else
+            if rising_edge(s_en_r) and (s_rst_t_local = "11") then
+                s_rst_t_local <= (others => '0');
+                s_rst_r_local <= '1';
+                s_reset <= '1';
+            elsif rising_edge(s_en_r) then
+                s_rst_t_local <= s_rst_t_local + 1;
+            elsif (s_reset = '1') and rising_edge(clk) and (s_total_time = 0) then
+                s_reset <= '0';
+                s_rst_t_local <= (others => '0');
+            end if;
+        end if;
+    end process p_display_selection;
+    
+    
+    --------------------------------------------------------------------
+    -- p_display_control:
+    -- Converts input number to format that is compatible with 
+    -- driver_7seg_4digits and displays only one number.
+    -- note:
+    --   The omitted numbers is rounded down so 155.79 km -> 155.7 km.
+    --------------------------------------------------------------------
+    p_display_control : process(clk)
+    begin
+        case s_sel_display_local is
+            when x"0" => -- speed
+                s_temp_local <= unsigned(speed_i);
+                leds_o <= b"10000";
+                if ((s_temp_local / 10000) < 1) then -- format DD.DD
+                    dp_o <= b"1011";
+                    data3_o <= std_logic_vector(resize(s_temp_local / 1000, 4));
+                    data2_o <= std_logic_vector(resize((s_temp_local mod 1000) / 100, 4));
+                    data1_o <= std_logic_vector(resize((s_temp_local mod 100) / 10, 4));
+                    data0_o <= std_logic_vector(resize(s_temp_local mod 10, 4));
+                elsif ((s_temp_local / 100000) < 1) then -- format DDD.D
+                    dp_o <= b"1101";
+                    data3_o <= std_logic_vector(resize(s_temp_local / 10000, 4));
+                    data2_o <= std_logic_vector(resize((s_temp_local mod 10000) / 1000, 4));
+                    data1_o <= std_logic_vector(resize((s_temp_local mod 1000) / 100, 4));
+                    data0_o <= std_logic_vector(resize((s_temp_local mod 100) / 10, 4));
+                elsif ((s_temp_local / 1000000) < 1) then -- format DDDD
+                    dp_o <= b"1111";
+                    data3_o <= std_logic_vector(resize(s_temp_local / 100000, 4));
+                    data2_o <= std_logic_vector(resize((s_temp_local mod 100000) / 10000, 4));
+                    data1_o <= std_logic_vector(resize((s_temp_local mod 10000) / 1000, 4));
+                    data0_o <= std_logic_vector(resize((s_temp_local mod 1000) / 100, 4));
+                else -- for higher numbers display only 9999
+                    dp_o <= b"1111";
+                    data3_o <= x"9";
+                    data2_o <= x"9";
+                    data1_o <= x"9";
+                    data0_o <= x"9";
+                end if;
+            when x"1" => -- distance
+                s_temp_local <= unsigned(distance_i);
+                leds_o <= b"01000";
+                if ((s_temp_local / 10000) < 1) then -- format D.DDD
+                    dp_o <= b"0111";
+                    data3_o <= std_logic_vector(resize(s_temp_local / 1000, 4));
+                    data2_o <= std_logic_vector(resize((s_temp_local mod 1000) / 100, 4));
+                    data1_o <= std_logic_vector(resize((s_temp_local mod 100) / 10, 4));
+                    data0_o <= std_logic_vector(resize(s_temp_local mod 10, 4));
+                elsif ((s_temp_local / 100000) < 1) then -- format DD.DD
+                    dp_o <= b"1011";
+                    data3_o <= std_logic_vector(resize(s_temp_local / 10000, 4));
+                    data2_o <= std_logic_vector(resize((s_temp_local mod 10000) / 1000, 4));
+                    data1_o <= std_logic_vector(resize((s_temp_local mod 1000) / 100, 4));
+                    data0_o <= std_logic_vector(resize((s_temp_local mod 100) / 10, 4));
+                elsif ((s_temp_local / 1000000) < 1) then -- format DDD.D
+                    dp_o <= b"1101";
+                    data3_o <= std_logic_vector(resize(s_temp_local / 100000, 4));
+                    data2_o <= std_logic_vector(resize((s_temp_local mod 100000) / 10000, 4));
+                    data1_o <= std_logic_vector(resize((s_temp_local mod 10000) / 1000, 4));
+                    data0_o <= std_logic_vector(resize((s_temp_local mod 1000) / 100, 4));
+                elsif ((s_temp_local / 10000000) < 1) then -- format DDDD
+                    dp_o <= b"1111";
+                    data3_o <= std_logic_vector(resize(s_temp_local / 1000000, 4));
+                    data2_o <= std_logic_vector(resize((s_temp_local mod 1000000) / 100000, 4));
+                    data1_o <= std_logic_vector(resize((s_temp_local mod 100000) / 10000, 4));
+                    data0_o <= std_logic_vector(resize((s_temp_local mod 10000) / 1000, 4));
+                end if;
+            when x"2" => -- kcalories
+                s_temp_local <= unsigned(calories_i);
+                leds_o <= b"00100";
+                if ((s_temp_local / 10000) < 1) then -- format D.DDD
+                    dp_o <= b"0111";
+                    data3_o <= std_logic_vector(resize(s_temp_local / 1000, 4));
+                    data2_o <= std_logic_vector(resize((s_temp_local mod 1000) / 100, 4));
+                    data1_o <= std_logic_vector(resize((s_temp_local mod 100) / 10, 4));
+                    data0_o <= std_logic_vector(resize(s_temp_local mod 10, 4));
+                elsif ((s_temp_local / 100000) < 1) then -- format DD.DD
+                    dp_o <= b"1011";
+                    data3_o <= std_logic_vector(resize(s_temp_local / 10000, 4));
+                    data2_o <= std_logic_vector(resize((s_temp_local mod 10000) / 1000, 4));
+                    data1_o <= std_logic_vector(resize((s_temp_local mod 1000) / 100, 4));
+                    data0_o <= std_logic_vector(resize((s_temp_local mod 100) / 10, 4));
+                elsif ((s_temp_local / 1000000) < 1) then -- format DDD.D
+                    dp_o <= b"1101";
+                    data3_o <= std_logic_vector(resize(s_temp_local / 100000, 4));
+                    data2_o <= std_logic_vector(resize((s_temp_local mod 100000) / 10000, 4));
+                    data1_o <= std_logic_vector(resize((s_temp_local mod 10000) / 1000, 4));
+                    data0_o <= std_logic_vector(resize((s_temp_local mod 1000) / 100, 4));
+                elsif ((s_temp_local / 10000000) < 1) then -- format DDDD
+                    dp_o <= b"1111";
+                    data3_o <= std_logic_vector(resize(s_temp_local / 1000000, 4));
+                    data2_o <= std_logic_vector(resize((s_temp_local mod 1000000) / 100000, 4));
+                    data1_o <= std_logic_vector(resize((s_temp_local mod 100000) / 10000, 4));
+                    data0_o <= std_logic_vector(resize((s_temp_local mod 10000) / 1000, 4));
+                end if;
+            when x"3" => -- total time
+                leds_o <= b"00010";
+                if (s_total_time < 3600) then -- MM.SS
+                    dp_o <= b"1011";
+                    data3_o <= std_logic_vector(resize((s_total_time / 60) / 10, 4));
+                    data2_o <= std_logic_vector(resize((s_total_time / 60) mod 10, 4));
+                    data1_o <= std_logic_vector(resize((s_total_time mod 60) / 10, 4));
+                    data0_o <= std_logic_vector(resize((s_total_time mod 60) mod 10, 4));
+                else -- HH.MM
+                    dp_o <= b"1011";
+                    data3_o <= std_logic_vector(resize((s_total_time / 3600) / 10, 4));
+                    data2_o <= std_logic_vector(resize((s_total_time / 3600) mod 10, 4));
+                    data1_o <= std_logic_vector(resize(((s_total_time mod 3600) / 60) / 10, 4));
+                    data0_o <= std_logic_vector(resize(((s_total_time mod 3600) / 60) mod 10, 4));
+                end if;
+            when x"4" => -- maximal speed
+                s_temp_local <= unsigned(max_speed_i);
+                leds_o <= b"00001";
+                if ((s_temp_local / 10000) < 1) then -- format DD.DD
+                    dp_o <= b"1011";
+                    data3_o <= std_logic_vector(resize(s_temp_local / 1000, 4));
+                    data2_o <= std_logic_vector(resize((s_temp_local mod 1000) / 100, 4));
+                    data1_o <= std_logic_vector(resize((s_temp_local mod 100) / 10, 4));
+                    data0_o <= std_logic_vector(resize(s_temp_local mod 10, 4));
+                elsif ((s_temp_local / 100000) < 1) then -- format DDD.D
+                    dp_o <= b"1101";
+                    data3_o <= std_logic_vector(resize(s_temp_local / 10000, 4));
+                    data2_o <= std_logic_vector(resize((s_temp_local mod 10000) / 1000, 4));
+                    data1_o <= std_logic_vector(resize((s_temp_local mod 1000) / 100, 4));
+                    data0_o <= std_logic_vector(resize((s_temp_local mod 100) / 10, 4));
+                elsif ((s_temp_local / 1000000) < 1) then -- format DDDD
+                    dp_o <= b"1111";
+                    data3_o <= std_logic_vector(resize(s_temp_local / 100000, 4));
+                    data2_o <= std_logic_vector(resize((s_temp_local mod 100000) / 10000, 4));
+                    data1_o <= std_logic_vector(resize((s_temp_local mod 10000) / 1000, 4));
+                    data0_o <= std_logic_vector(resize((s_temp_local mod 1000) / 100, 4));
+                else -- for higher numbers display only 9999
+                    dp_o <= b"1111";
+                    data3_o <= x"9";
+                    data2_o <= x"9";
+                    data1_o <= x"9";
+                    data0_o <= x"9";
+                end if;
+            when others => -- there are no other states.
+        end case;
+    end process p_display_control;
+
+    reset <= s_reset;
+```
+
 ### Simulace 
 
 TODO
