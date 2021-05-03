@@ -119,6 +119,7 @@ begin
             s_rst_t <= '1'; -- reset the timer and clock divider
         elsif (rising_edge(clk) and (unsigned(s_etime) > g_ETIME_ZERO)) then
             s_etime_local <= (others => '0');
+            s_skip <= '1';
         end if;
     end process p_etime;
     
