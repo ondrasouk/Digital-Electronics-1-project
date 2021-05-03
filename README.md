@@ -74,11 +74,12 @@ K měření času se dá použít hodinový zdroj z FPGA který má 100&nbsp;MHz
             s_rst_t <= '1'; -- reset the timer and clock divider
         elsif (rising_edge(clk) and (unsigned(s_etime) > g_ETIME_ZERO)) then
             s_etime_local <= (others => '0');
+            s_skip <= '1';
         end if;
     end process p_etime;
 ```
 #### Popis kódu
-TODO
+Proces p_etime má za úkol měřit čas, počítat vstupní hodnoty, přiřazovat naměřený čas do signálu `s_etime_local` a posílat signál `s_rst_t` a tím resetovat `clk_en1` a `bin_cnt0`. Reset proběhne vždy když příjde náběžná hrana z hallova senzoru. Také se musí kontrolovat, jestli už neuplynula moc dlouhá doba od posledního vstupu a v případě potřeby vynulovat čas v signálu `s_etime`. V tomto případě je potřeba přeskočit další měření, kdeby mohla kvůli jedoucímu čítači přetéct maximální hodnota času (0.1*2^16&nbsp;ms&nbsp;=&nbsp;6.5536&nbsp;s) a mohlo by to odečíst špatnou hodnotu. Pro tento účel je zde signál `s_skip`, který zaručí, že při další náběžné hraně se aktuální hodnota nebude měřit a jen proběhne reset čítače a děliče. Při globálním resetu se vyresetuje vše a nastaví se `s_skip`, aby další náběžnou hranu to nepočítalo. Lokální reset `s_rst_t` trvá do dalšího clocku a dokud není vyresetovaný čitač.
 
 ### Simulace 
 
