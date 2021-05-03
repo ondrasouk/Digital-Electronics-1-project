@@ -155,7 +155,16 @@ Podle kinetické energie hmotného bodu Eₖ&nbsp;=&nbsp;1/2&nbsp;m&nbsp;v² (v 
 
 Na druhém obrázku vidíme správnou funkci vynulování rychlostí.
 ### Převádění vypočtených hodnot do formátu pro driver sedmi segmentového displeje
+Kód ve display_control by se dal rozdělit na tři části:
+1) celkový čas
+2) přepínání obrazovek a reset
+3) konverze vstupních signálů do formátu zpracovatelného driverem na sedmi segmentový displej
 
+Se počítá pomocí instance `clk_en2` a `p_total_time`, každou sekundu se přičte jednička do `s_total_time`, při `reset` se čas vynuluje.
+
+Přepínání obrazovek obsluhuje instance `clk_en3` a `bin_cnt1` a proces `p_display_selection`, který při stisknutí tlačítka `button_i` přepne na další obrazovku, pokud je tlačítko stisknuto jen krátce a pokud dlouze více než osm sekund, tak nastaví signál `reset` na jedničku a po proběhnutí resetu ho zase nastaví na nulu. Doba stisku se počítá pomocí `clk_en3` a `bin_cnt1`. Přepnutí obrazovky nastane až se sestupnou hranou.
+
+V procesu `p_display_control` se pomocí operací děleno a modulo rozdělují jednotlivé dekadické hodnoty a přiřazují se `dataX_o`, kde je uložená vždy jedna číslice pro displej. `data0_o` je číslice na sedmisegmentu nejvíce v pravo `data3_o` je číslice nejvíce vlevo.
 
 #### Náhled na kód v architecture display_control.vhdl
 ```vhdl
@@ -385,10 +394,13 @@ Na druhém obrázku vidíme správnou funkci vynulování rychlostí.
     reset <= s_reset;
 ```
 
-### Simulace 
+#### Simulace 
+Simulace probíhá tím, že se testuje zobrazení různě velkých čísel a potom se pomocí assertů kontroluje výstupní hodnota. Postupně se zkouší také různé režimy zobrazení a na závěr se testuje dlouhé podržení pro nastavení `reset` a potom jeho vypnutí.
 
-TODO
+Poznámka: Simulace pracuje v mnohem kratším časovém intervalu a tedy výstupní signály nejsou naprosto čisté, ale normálně se neproklikává displej takovou rychlostí, přebliknutí hodnot z minulého displeje není kritické.
+![](images/display_control_sim.png)
 
+Simulace kompletního projektu je zbytečná, protože výstupní hodnoty pro sedmisegmentový display jsou špatně čitelné a vyzkoušení veškeré funkcionality dohromady velmi náročné. 
 
 ## Video
 *Přidat*

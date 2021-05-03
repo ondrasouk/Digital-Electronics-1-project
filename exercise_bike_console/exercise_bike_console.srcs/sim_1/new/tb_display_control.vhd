@@ -38,8 +38,8 @@ end tb_display_control;
 architecture Behavioral of tb_display_control is
     -- Local constants
     constant c_CLK_100MHZ_PERIOD : time := 10 ns;
-    constant c_clk_div_sec : natural := 100; --0.1us
-    constant c_time_for_reset : natural := 20; --20ns
+    constant c_clk_div_sec : natural := 100; --1us
+    constant c_time_for_reset : natural := 20; --4*200ns
 
     --Local signals for UUT
     -- inputs
