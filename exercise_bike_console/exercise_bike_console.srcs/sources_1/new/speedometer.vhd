@@ -34,7 +34,7 @@ use IEEE.NUMERIC_STD.ALL;
 entity speedometer is
     generic(
         g_RESISTLOAD : natural := 20; -- Magnetical brakes load. Work in Joules needed for one rotation.
-        g_INERTIA_MOMENT : natural := 5000000; -- 10^4*pi^2**moment of inertia of flywheel. In kg*m^2.
+        g_INERTIA_MOMENT : natural := 5000000; -- 10^4*pi^2*moment of inertia of flywheel. In kg*m^2.
         g_WHEEL_CIRCUMFERENCE : natural := 250; -- in centimeters (l=2*pi*r)
         g_ETIME_ZERO : unsigned(16 - 1 downto 0) := x"EA60"; -- d60000 = 6 sec 
         -- If no hall sensor input for some time then turn zero the speed of bike.
@@ -145,6 +145,7 @@ begin
             s_speed2_local <= (others => '0');
             s_speed3_local <= (others => '0');
             s_avg_speed_local <= (others => '0');
+            s_inertia_local <= (others => '0');
         elsif rising_edge(hall_sensor_i) and not (reset = '1') then
             s_speed3_local <= s_speed2_local;
             s_speed2_local <= s_speed1_local;
