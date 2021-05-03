@@ -145,13 +145,13 @@ Přiřazování hodnot je jen převod na jednotky vhodnější k použití v dis
 #### Simulace 
 V simulaci je simulován postupné zrychlení na 10 m/s (36 km/h) a poté prudké zastavení, kde se testuje vynulování po dlouhé době bez hrany. Mohlo by se toho testovat více např. po každém pulzu ze senzoru rychlost nebo tak, ale myslím, že vizuální kontrola výsledků je jednodušší a rychlejší. Kontroluje se tedy jen rychlost na začátku po jednom pulzu (test jestli funguje správně `s_skip`), vzdálenost po ujetých deseti metrech a rychlost při konstantní rychlosti. Dělička hodinového signálu je nastavena na tisícinu normální hodnoty, aby simulace netrvala extrémně dlouho (místo 20 s je to 20 ms).
 
-![](images/speedometer_sim1.jpg)
+![](images/speedometer_sim1.png)
 
 Na Obrázku ze simulace můžeme vidět rozběhnutí. Odpor a moment hybnosti jsem počítal jako rychlost pohybujícího se dospělého a kola - 80 kg a odpor jsem počítal, aby při 36 km/h byl potřebný výkon dodávaný na šlapátka 80 W. 
 
 Podle kinetické energie hmotného bodu Eₖ&nbsp;=&nbsp;1/2&nbsp;m&nbsp;v² (v = o/T; o - obvod kola)si můžeme odvodit jaké parametry musí mít moment setrvačnosti J. Poté můžeme nastavit odpor na nulu a pozorovat, že do celkem přesně výjde vypočítaný výkon na konci rozběhu. Délka rozběhu byla volená daleko kratší než by byla v reálných podmínkách, ale účel to splní. Kvůli zaokrouhlování při dělení vždy dolů bude chyba mířit také dolů a výsledek bude o trochu menší než očekávání.
 
-![](images/speedometer_sim2.jpg)
+![](images/speedometer_sim2.png)
 
 Na druhém obrázku vidíme správnou funkci vynulování rychlostí.
 ### Převádění vypočtených hodnot do formátu pro driver sedmi segmentového displeje
