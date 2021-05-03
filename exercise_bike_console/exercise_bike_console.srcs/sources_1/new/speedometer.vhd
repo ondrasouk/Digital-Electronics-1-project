@@ -33,8 +33,8 @@ use IEEE.NUMERIC_STD.ALL;
 
 entity speedometer is
     generic(
-        g_RESISTLOAD : natural := 30000; -- Magnetical brakes load in miliN/m (g*m^2) when T = 1s (1N/m = 1000 miliN/m)
-        g_INERTIA_MOMENT : natural := 500000; -- moment of inertia of flywheel. In g*m^2. (1 kg*m^2 = 1000 g*m^2)
+        g_RESISTLOAD : natural := 20; -- Magnetical brakes load. Work in Joules needed for one rotation.
+        g_INERTIA_MOMENT : natural := 5000000; -- 10^4*pi^2**moment of inertia of flywheel. In kg*m^2.
         g_WHEEL_CIRCUMFERENCE : natural := 250; -- in centimeters (l=2*pi*r)
         g_ETIME_ZERO : unsigned(16 - 1 downto 0) := x"EA60"; -- d60000 = 6 sec 
         -- If no hall sensor input for some time then turn zero the speed of bike.
@@ -65,9 +65,8 @@ architecture Behavioral of speedometer is
     signal s_max_speed_local : unsigned(22 - 1 downto 0);   -- in cm/s
     signal s_distance_local : unsigned(20 - 1 downto 0);    -- total distance (in wheel circumferences, max.2621.44 km (250cm))
     signal s_inertia_local : unsigned(16 - 1 downto 0);     -- Actual inertia of flywheel in Joules
-    signal s_inertia1_local : unsigned(16 - 1 downto 0);    -- Actual inertia of flywheel in Joules
-    signal s_work_local : unsigned(16 - 1 downto 0);        -- Work needed between one rotation
-    signal s_calories_local : unsigned(22 - 1 downto 0);    -- sum of calories
+    signal s_inertia1_local : unsigned(16 - 1 downto 0);    -- Last inertia of flywheel in Joules
+    signal s_work_local : unsigned(24 - 1 downto 0);        -- Work
 
     
 
@@ -137,16 +136,15 @@ begin
             s_speed3_local <= (others => '0');
             s_avg_speed_local <= (others => '0');
             s_max_speed_local <= (others => '0');
-            s_work_local <= (others => '0');
-            s_calories_local <= (others => '0');
             s_inertia_local <= (others => '0');
             s_inertia1_local <= (others => '0');
+            s_work_local <= (others => '0');
         elsif (s_etime_local = x"0000") and not (reset = '1') then --flywheel is stopped
             s_speed_local <= (others => '0');
             s_speed1_local <= (others => '0');
             s_speed2_local <= (others => '0');
             s_speed3_local <= (others => '0');
-            s_work_local <= (others => '0');
+            s_avg_speed_local <= (others => '0');
         elsif rising_edge(hall_sensor_i) and not (reset = '1') then
             s_speed3_local <= s_speed2_local;
             s_speed2_local <= s_speed1_local;
@@ -157,16 +155,15 @@ begin
                 s_max_speed_local <= s_avg_speed_local;
             end if;
             s_inertia1_local <= s_inertia_local;
-            s_inertia_local <= (g_INERTIA_MOMENT/s_etime_local);
-            s_work_local <= resize(s_inertia_local - s_inertia1_local + (g_RESISTLOAD/s_etime_local), 16); -- in Joules
-            s_calories_local <= s_calories_local + resize(resize(s_work_local*1000, 26)/4184, 22); -- 1cal = 4.184 Joules
+            s_inertia_local <= resize(g_INERTIA_MOMENT/((s_etime_local * s_etime_local)/5000), 16);
+            s_work_local <= s_work_local + s_inertia_local - s_inertia1_local + g_RESISTLOAD; -- in Joules
         end if;
     end process p_calc;
     
     speed_o <= std_logic_vector(resize(resize(s_avg_speed_local*36, 26)/10, 22));
     max_speed_o <= std_logic_vector(resize(resize(s_max_speed_local*36, 26)/10, 22));
     distance_o <= std_logic_vector(resize(resize(s_distance_local * g_WHEEL_CIRCUMFERENCE, 30) / 100, 22));
-    calories_o <= std_logic_vector(s_calories_local);
+    calories_o <= std_logic_vector(resize(resize(s_work_local*1000, 26)/4184, 22)); -- 1cal = 4.184 Joules
     
     
 end Behavioral;

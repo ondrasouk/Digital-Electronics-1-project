@@ -15,10 +15,10 @@
       <Cursor1Time time="10000000000fs"></Cursor1Time>
    </zoom_setting>
    <column_width_setting>
-      <NameColumnWidth column_width="162"></NameColumnWidth>
+      <NameColumnWidth column_width="158"></NameColumnWidth>
       <ValueColumnWidth column_width="60"></ValueColumnWidth>
    </column_width_setting>
-   <WVObjectSize size="12" />
+   <WVObjectSize size="15" />
    <wvobject type="logic" fp_name="/tb_speedometer/s_clk_100MHz">
       <obj_property name="ElementShortName">s_clk_100MHz</obj_property>
       <obj_property name="ObjectShortName">s_clk_100MHz</obj_property>
@@ -78,5 +78,17 @@
       <obj_property name="ObjectShortName">s_speed3_local[21:0]</obj_property>
       <obj_property name="CustomSignalColor">#008000</obj_property>
       <obj_property name="UseCustomSignalColor">true</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/tb_speedometer/uut_speedometer/s_inertia_local">
+      <obj_property name="ElementShortName">s_inertia_local[15:0]</obj_property>
+      <obj_property name="ObjectShortName">s_inertia_local[15:0]</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/tb_speedometer/uut_speedometer/s_inertia1_local">
+      <obj_property name="ElementShortName">s_inertia1_local[15:0]</obj_property>
+      <obj_property name="ObjectShortName">s_inertia1_local[15:0]</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/tb_speedometer/uut_speedometer/s_work_local">
+      <obj_property name="ElementShortName">s_work_local[23:0]</obj_property>
+      <obj_property name="ObjectShortName">s_work_local[23:0]</obj_property>
    </wvobject>
 </wave_config>

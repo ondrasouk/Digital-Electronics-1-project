@@ -1,2 +1,4 @@
+INFO: [VRFC 10-163] Analyzing VHDL file "/run/media/ondra/enc/Sync/BPC-EKT2L/BPC-DE1/projekt/Digital-Electronics-1-project/exercise_bike_console/exercise_bike_console.srcs/sources_1/new/speedometer.vhd" into library xil_defaultlib
+INFO: [VRFC 10-3107] analyzing entity 'speedometer'
 INFO: [VRFC 10-163] Analyzing VHDL file "/run/media/ondra/enc/Sync/BPC-EKT2L/BPC-DE1/projekt/Digital-Electronics-1-project/exercise_bike_console/exercise_bike_console.srcs/sim_1/new/tb_speedometer.vhd" into library xil_defaultlib
 INFO: [VRFC 10-3107] analyzing entity 'tb_speedometer'
