@@ -444,8 +444,8 @@ Simulace kompletního projektu je zbytečná, protože výstupní hodnoty pro se
 ![](images/top.png)
 
 ## Video
-*Přidat*
-[Link na video prezentace](https://drive.google.com/file/d/1ytzTlAc1w-bohdkFYsfgbyaPDYVCt5yU/view?usp=drivesdk)
+
+[Link na video prezentace](https://www.youtube.com/watch?v=75vinimI-LY&feature=youtu.be)
 
 
 ## Reference
