@@ -34,14 +34,14 @@ Pro následní zobrazení měřené veličiny byl využit 4x7 segmentový disple
 | 3,3V | 6 |  |
 
 
-
+|  | **Pmod JB** |  |
 | :-: | :-: | :-: |
 | AN0 | 4 | C15 |
 | AN1 | 3 | D15 | 
 | AN2 | 2 | E16 | 
 | AN3 | 1 | E15 | 
 
-
+|  | **Pmod JC** |  |
 | :-: | :-: | :-: |
 | LED1 | 1 | D4 |
 | LED2 | 2 | D3 | 
