@@ -22,6 +22,10 @@ Pro následní zobrazení měřené veličiny byl využit 4x7 segmentový disple
 
 
 ## Popis zapojení 
+![](images/schema.png)
+
+![](images/PCB.png)
+
 |  | **Pmod JA** |  |
 | :-: | :-: | :-: |
 | a | 1 | G13 |
