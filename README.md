@@ -49,12 +49,12 @@ Pro následní zobrazení měřené veličiny byl využit 4x7 segmentový disple
 
 |  | **Pmod JC** |  |
 | :-: | :-: | :-: |
-| LED1 | 1 | D4 |
-| LED2 | 2 | D3 | 
-| LED3 | 3 | F4 | 
-| LED4 | 4 | F3 | 
-| LED5 | 7 | E2 | 
-| hall sensor | 8 | D2 | 
+| LED1 | 1 | U12 |
+| LED2 | 2 | V12 | 
+| LED3 | 3 | V10 | 
+| LED4 | 4 | V11 | 
+| LED5 | 7 | U14 | 
+| hall sensor | 8 | V14 | 
 
 
 ## Programová část
