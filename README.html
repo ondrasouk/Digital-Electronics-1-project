@@ -601,6 +601,108 @@ V Programu se jedná o <code>g_RESISTLOAD</code> a o <code>g_INERTIA_MOMENT</cod
 <h3>
 <a id="user-content-blokové-schéma-topvhdl" class="anchor" href="#blokov%C3%A9-sch%C3%A9ma-topvhdl" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Blokové schéma top.vhdl</h3>
 <p><a href="images/top.png" target="_blank" rel="noopener noreferrer"><img src="images/top.png" alt="" style="max-width:100%;"></a></p>
+<h3>
+<a id="user-content-kód-top-modulu" class="anchor" href="#k%C3%B3d-top-modulu" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>kód top modulu</h3>
+<div class="highlight highlight-source-vhdl"><pre><span class="pl-k">entity</span> <span class="pl-en">top</span> <span class="pl-k">is</span>
+    <span class="pl-k">Port</span> (
+        CLK100MHZ   : <span class="pl-k">in</span> <span class="pl-c1">STD_LOGIC</span>;
+        btn0        : <span class="pl-k">in</span> <span class="pl-c1">STD_LOGIC</span>; <span class="pl-c"><span class="pl-c">--</span> right BTN0 button</span>
+        D12         : <span class="pl-k">out</span> <span class="pl-c1">STD_LOGIC</span>; <span class="pl-c"><span class="pl-c">--</span> AN0</span>
+        A11         : <span class="pl-k">out</span> <span class="pl-c1">STD_LOGIC</span>; <span class="pl-c"><span class="pl-c">--</span> AN1</span>
+        B11         : <span class="pl-k">out</span> <span class="pl-c1">STD_LOGIC</span>; <span class="pl-c"><span class="pl-c">--</span> AN2</span>
+        G13         : <span class="pl-k">out</span> <span class="pl-c1">STD_LOGIC</span>; <span class="pl-c"><span class="pl-c">--</span> AN3</span>
+        E15         : <span class="pl-k">out</span> <span class="pl-c1">STD_LOGIC</span>; <span class="pl-c"><span class="pl-c">--</span> A</span>
+        E16         : <span class="pl-k">out</span> <span class="pl-c1">STD_LOGIC</span>; <span class="pl-c"><span class="pl-c">--</span> B</span>
+        D15         : <span class="pl-k">out</span> <span class="pl-c1">STD_LOGIC</span>; <span class="pl-c"><span class="pl-c">--</span> C</span>
+        C15         : <span class="pl-k">out</span> <span class="pl-c1">STD_LOGIC</span>; <span class="pl-c"><span class="pl-c">--</span> D</span>
+        J17         : <span class="pl-k">out</span> <span class="pl-c1">STD_LOGIC</span>; <span class="pl-c"><span class="pl-c">--</span> E</span>
+        J18         : <span class="pl-k">out</span> <span class="pl-c1">STD_LOGIC</span>; <span class="pl-c"><span class="pl-c">--</span> F</span>
+        K15         : <span class="pl-k">out</span> <span class="pl-c1">STD_LOGIC</span>; <span class="pl-c"><span class="pl-c">--</span> G</span>
+        J15         : <span class="pl-k">out</span> <span class="pl-c1">STD_LOGIC</span>; <span class="pl-c"><span class="pl-c">--</span> P (DP)</span>
+        U12         : <span class="pl-k">out</span> <span class="pl-c1">STD_LOGIC</span>; <span class="pl-c"><span class="pl-c">--</span> LED1</span>
+        V12         : <span class="pl-k">out</span> <span class="pl-c1">STD_LOGIC</span>; <span class="pl-c"><span class="pl-c">--</span> LED2</span>
+        V10         : <span class="pl-k">out</span> <span class="pl-c1">STD_LOGIC</span>; <span class="pl-c"><span class="pl-c">--</span> LED3</span>
+        V11         : <span class="pl-k">out</span> <span class="pl-c1">STD_LOGIC</span>; <span class="pl-c"><span class="pl-c">--</span> LED4</span>
+        T13         : <span class="pl-k">out</span> <span class="pl-c1">STD_LOGIC</span>; <span class="pl-c"><span class="pl-c">--</span> LED5</span>
+        U13         : <span class="pl-k">in</span> <span class="pl-c1">STD_LOGIC</span>  <span class="pl-c"><span class="pl-c">--</span> Hall sensor</span>
+    );
+<span class="pl-k">end</span> <span class="pl-en">top</span>;
+
+<span class="pl-k">architecture</span> <span class="pl-en">Behavioral</span> <span class="pl-k">of</span> <span class="pl-en">top</span> <span class="pl-k">is</span>
+    <span class="pl-c"><span class="pl-c">--</span> outternal reset</span>
+    <span class="pl-k">signal</span> s_reset      : <span class="pl-c1">std_logic</span>;
+    
+    <span class="pl-k">signal</span> s_speed      : <span class="pl-c1">std_logic_vector</span>(<span class="pl-c1">22</span> <span class="pl-k">-</span> <span class="pl-c1">1</span> <span class="pl-k">downto</span> <span class="pl-c1">0</span>);
+    <span class="pl-k">signal</span> s_distance   : <span class="pl-c1">std_logic_vector</span>(<span class="pl-c1">22</span> <span class="pl-k">-</span> <span class="pl-c1">1</span> <span class="pl-k">downto</span> <span class="pl-c1">0</span>);
+    <span class="pl-k">signal</span> s_calories   : <span class="pl-c1">std_logic_vector</span>(<span class="pl-c1">22</span> <span class="pl-k">-</span> <span class="pl-c1">1</span> <span class="pl-k">downto</span> <span class="pl-c1">0</span>);
+    <span class="pl-k">signal</span> s_max_speed  : <span class="pl-c1">std_logic_vector</span>(<span class="pl-c1">22</span> <span class="pl-k">-</span> <span class="pl-c1">1</span> <span class="pl-k">downto</span> <span class="pl-c1">0</span>);
+    
+    <span class="pl-k">signal</span> s_dp         : <span class="pl-c1">std_logic_vector</span>(<span class="pl-c1">4</span> <span class="pl-k">-</span> <span class="pl-c1">1</span> <span class="pl-k">downto</span> <span class="pl-c1">0</span>);
+    <span class="pl-k">signal</span> s_data0      : <span class="pl-c1">std_logic_vector</span>(<span class="pl-c1">4</span> <span class="pl-k">-</span> <span class="pl-c1">1</span> <span class="pl-k">downto</span> <span class="pl-c1">0</span>);
+    <span class="pl-k">signal</span> s_data1      : <span class="pl-c1">std_logic_vector</span>(<span class="pl-c1">4</span> <span class="pl-k">-</span> <span class="pl-c1">1</span> <span class="pl-k">downto</span> <span class="pl-c1">0</span>);
+    <span class="pl-k">signal</span> s_data2      : <span class="pl-c1">std_logic_vector</span>(<span class="pl-c1">4</span> <span class="pl-k">-</span> <span class="pl-c1">1</span> <span class="pl-k">downto</span> <span class="pl-c1">0</span>);
+    <span class="pl-k">signal</span> s_data3      : <span class="pl-c1">std_logic_vector</span>(<span class="pl-c1">4</span> <span class="pl-k">-</span> <span class="pl-c1">1</span> <span class="pl-k">downto</span> <span class="pl-c1">0</span>);
+
+<span class="pl-k">begin</span>
+
+    <span class="pl-c"><span class="pl-c">--</span>------------------------------------------------------------------</span>
+    <span class="pl-c"><span class="pl-c">--</span> outstance (copy) of speedometer entity</span>
+    <span class="pl-en">speedometer</span> : <span class="pl-k">entity</span> <span class="pl-ent">work</span>.<span class="pl-ent">speedometer</span>
+        <span class="pl-k">port</span> <span class="pl-k">map</span>(
+            clk             <span class="pl-k">=&gt;</span> CLK100MHZ,
+            reset           <span class="pl-k">=&gt;</span> s_reset,
+            hall_sensor_i   <span class="pl-k">=&gt;</span> U13,
+            speed_o         <span class="pl-k">=&gt;</span> s_speed,
+            distance_o      <span class="pl-k">=&gt;</span> s_distance,
+            calories_o      <span class="pl-k">=&gt;</span> s_calories,
+            max_speed_o     <span class="pl-k">=&gt;</span> s_max_speed
+        );
+        
+    <span class="pl-c"><span class="pl-c">--</span>------------------------------------------------------------------</span>
+    <span class="pl-c"><span class="pl-c">--</span> outstance (copy) of display_control entity</span>
+    <span class="pl-en">display_control</span> : <span class="pl-k">entity</span> <span class="pl-ent">work</span>.<span class="pl-ent">display_control</span>
+        <span class="pl-k">port</span> <span class="pl-k">map</span>(
+            clk         <span class="pl-k">=&gt;</span> CLK100MHZ,
+            speed_i     <span class="pl-k">=&gt;</span> s_speed,
+            distance_i  <span class="pl-k">=&gt;</span> s_distance,
+            calories_i  <span class="pl-k">=&gt;</span> s_calories,
+            max_speed_i <span class="pl-k">=&gt;</span> s_max_speed,
+            button_i    <span class="pl-k">=&gt;</span> btn0,
+            reset       <span class="pl-k">=&gt;</span> s_reset,
+            leds_o(<span class="pl-c1">0</span>)   <span class="pl-k">=&gt;</span> U12,
+            leds_o(<span class="pl-c1">1</span>)   <span class="pl-k">=&gt;</span> V12,
+            leds_o(<span class="pl-c1">2</span>)   <span class="pl-k">=&gt;</span> V10,
+            leds_o(<span class="pl-c1">3</span>)   <span class="pl-k">=&gt;</span> V11,
+            leds_o(<span class="pl-c1">4</span>)   <span class="pl-k">=&gt;</span> T13
+        );
+
+    <span class="pl-c"><span class="pl-c">--</span>------------------------------------------------------------------</span>
+    <span class="pl-c"><span class="pl-c">--</span> outstance (copy) of driver_7seg_4digits entity</span>
+    <span class="pl-en">driver_seg_4</span> : <span class="pl-k">entity</span> <span class="pl-ent">work</span>.<span class="pl-ent">driver_7seg_4digits</span>
+        <span class="pl-k">port</span> <span class="pl-k">map</span>(
+            clk         <span class="pl-k">=&gt;</span> CLK100MHZ,
+            reset       <span class="pl-k">=&gt;</span> s_reset,
+            data0_i     <span class="pl-k">=&gt;</span> s_data0,
+            data1_i     <span class="pl-k">=&gt;</span> s_data1,
+            data2_i     <span class="pl-k">=&gt;</span> s_data2,
+            data3_i     <span class="pl-k">=&gt;</span> s_data3,
+            dp_i        <span class="pl-k">=&gt;</span> s_dp,
+            seg_o(<span class="pl-c1">6</span>)    <span class="pl-k">=&gt;</span> E15,
+            seg_o(<span class="pl-c1">5</span>)    <span class="pl-k">=&gt;</span> E16,
+            seg_o(<span class="pl-c1">4</span>)    <span class="pl-k">=&gt;</span> D15,
+            seg_o(<span class="pl-c1">3</span>)    <span class="pl-k">=&gt;</span> C15,
+            seg_o(<span class="pl-c1">2</span>)    <span class="pl-k">=&gt;</span> J17,
+            seg_o(<span class="pl-c1">1</span>)    <span class="pl-k">=&gt;</span> J18,
+            seg_o(<span class="pl-c1">0</span>)    <span class="pl-k">=&gt;</span> K15,
+            dp_o        <span class="pl-k">=&gt;</span> J15,
+            dig_o(<span class="pl-c1">0</span>)    <span class="pl-k">=&gt;</span> D12,
+            dig_o(<span class="pl-c1">1</span>)    <span class="pl-k">=&gt;</span> A11,
+            dig_o(<span class="pl-c1">2</span>)    <span class="pl-k">=&gt;</span> B11,
+            dig_o(<span class="pl-c1">3</span>)    <span class="pl-k">=&gt;</span> G13
+        );
+<span class="pl-k">end</span> <span class="pl-en">Behavioral</span>;</pre></div>
+<p>Vygenerovat bitstream se nepodařilo kvůli chybě placeru.
+<a href="images/placer_error.png" target="_blank" rel="noopener noreferrer"><img src="images/placer_error.png" alt="" style="max-width:100%;"></a></p>
 <h2>
 <a id="user-content-video" class="anchor" href="#video" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Video</h2>
 <p><a href="https://www.youtube.com/watch?v=75vinimI-LY&amp;feature=youtu.be" rel="nofollow">Link na video prezentace</a></p>
@@ -612,7 +714,6 @@ V Programu se jedná o <code>g_RESISTLOAD</code> a o <code>g_INERTIA_MOMENT</cod
 <li><a href="Docs/arty_a7_sch.pdf">arty_a7_sch.pdf</a></li>
 <li><a href="https://dratek.cz/docs/produkty/0/908/a3144eu.pdf" rel="nofollow">44E datasheet</a></li>
 </ol>
-<p>TODO</p>
 
               </article>
             </div>
