@@ -1574,7 +1574,7 @@ design rules under a new name.</description>
 <param name="PrefDir.12" value="0"/>
 <param name="PrefDir.13" value="0"/>
 <param name="PrefDir.14" value="0"/>
-<param name="PrefDir.15" value="*"/>
+<param name="PrefDir.15" value="0"/>
 <param name="PrefDir.16" value="*"/>
 <param name="cfVia" value="8"/>
 <param name="cfNonPref" value="5"/>
@@ -1652,35 +1652,35 @@ design rules under a new name.</description>
 <elements>
 <element name="D1" library="special" library_urn="urn:adsk.eagle:library:367" package="7SEG-13" package3d_urn="urn:adsk.eagle:package:26668/2" value="" x="20.32" y="26.67" smashed="yes">
 <attribute name="NAME" x="14.224" y="35.814" size="1.778" layer="25" ratio="10"/>
-<attribute name="POPULARITY" value="3" x="39.37" y="16.51" size="1.778" layer="27" display="off"/>
+<attribute name="POPULARITY" value="5" x="39.37" y="16.51" size="1.778" layer="27" display="off"/>
 <attribute name="VALUE" x="14.224" y="15.748" size="1.778" layer="27" ratio="10"/>
 </element>
 <element name="D2" library="special" library_urn="urn:adsk.eagle:library:367" package="7SEG-13" package3d_urn="urn:adsk.eagle:package:26668/2" value="" x="33.02" y="26.67" smashed="yes">
 <attribute name="NAME" x="26.924" y="35.814" size="1.778" layer="25" ratio="10"/>
-<attribute name="POPULARITY" value="3" x="66.04" y="16.51" size="1.778" layer="27" display="off"/>
+<attribute name="POPULARITY" value="5" x="66.04" y="16.51" size="1.778" layer="27" display="off"/>
 <attribute name="VALUE" x="26.924" y="15.748" size="1.778" layer="27" ratio="10"/>
 </element>
 <element name="D3" library="special" library_urn="urn:adsk.eagle:library:367" package="7SEG-13" package3d_urn="urn:adsk.eagle:package:26668/2" value="" x="45.72" y="26.67" smashed="yes">
 <attribute name="NAME" x="39.624" y="35.814" size="1.778" layer="25" ratio="10"/>
-<attribute name="POPULARITY" value="3" x="92.71" y="16.51" size="1.778" layer="27" display="off"/>
+<attribute name="POPULARITY" value="5" x="92.71" y="16.51" size="1.778" layer="27" display="off"/>
 <attribute name="VALUE" x="39.624" y="15.748" size="1.778" layer="27" ratio="10"/>
 </element>
 <element name="D4" library="special" library_urn="urn:adsk.eagle:library:367" package="7SEG-13" package3d_urn="urn:adsk.eagle:package:26668/2" value="" x="58.42" y="26.67" smashed="yes">
 <attribute name="NAME" x="52.324" y="35.814" size="1.778" layer="25" ratio="10"/>
-<attribute name="POPULARITY" value="3" x="77.47" y="-5.08" size="1.778" layer="27" display="off"/>
+<attribute name="POPULARITY" value="5" x="77.47" y="-5.08" size="1.778" layer="27" display="off"/>
 <attribute name="VALUE" x="52.324" y="15.748" size="1.778" layer="27" ratio="10"/>
 </element>
-<element name="JA" library="jumper" library_urn="urn:adsk.eagle:library:252" package="JP6Q" package3d_urn="urn:adsk.eagle:package:15457/1" value="" x="46.99" y="59.69" smashed="yes">
+<element name="JB" library="jumper" library_urn="urn:adsk.eagle:library:252" package="JP6Q" package3d_urn="urn:adsk.eagle:package:15457/1" value="" x="46.99" y="59.69" smashed="yes">
 <attribute name="NAME" x="39.37" y="62.738" size="1.27" layer="25" ratio="10"/>
 <attribute name="POPULARITY" value="0" x="81.28" y="33.02" size="1.778" layer="27" display="off"/>
 <attribute name="VALUE" x="39.37" y="54.102" size="1.27" layer="27" ratio="10"/>
 </element>
-<element name="JB" library="jumper" library_urn="urn:adsk.eagle:library:252" package="JP6Q" package3d_urn="urn:adsk.eagle:package:15457/1" value="" x="72.39" y="59.69" smashed="yes">
+<element name="JC" library="jumper" library_urn="urn:adsk.eagle:library:252" package="JP6Q" package3d_urn="urn:adsk.eagle:package:15457/1" value="" x="72.39" y="59.69" smashed="yes">
 <attribute name="NAME" x="64.77" y="62.738" size="1.27" layer="25" ratio="10"/>
 <attribute name="POPULARITY" value="0" x="123.19" y="33.02" size="1.778" layer="27" display="off"/>
 <attribute name="VALUE" x="64.77" y="54.102" size="1.27" layer="27" ratio="10"/>
 </element>
-<element name="JC" library="jumper" library_urn="urn:adsk.eagle:library:252" package="JP6Q" package3d_urn="urn:adsk.eagle:package:15457/1" value="" x="21.59" y="59.69" smashed="yes">
+<element name="JA" library="jumper" library_urn="urn:adsk.eagle:library:252" package="JP6Q" package3d_urn="urn:adsk.eagle:package:15457/1" value="" x="21.59" y="59.69" smashed="yes">
 <attribute name="NAME" x="13.97" y="62.738" size="1.27" layer="25" ratio="10"/>
 <attribute name="POPULARITY" value="0" x="43.18" y="11.43" size="1.778" layer="27" display="off"/>
 <attribute name="VALUE" x="13.97" y="54.102" size="1.27" layer="27" ratio="10"/>
@@ -1821,7 +1821,7 @@ design rules under a new name.</description>
 <contactref element="D1" pad="7"/>
 <contactref element="D3" pad="7"/>
 <contactref element="D4" pad="7"/>
-<contactref element="JA" pad="1"/>
+<contactref element="JB" pad="1"/>
 <wire x1="24.0792" y1="34.29" x2="22.86" y2="34.29" width="0.1524" layer="15"/>
 <wire x1="25.2984" y1="35.5092" x2="24.0792" y2="34.29" width="0.1524" layer="15"/>
 <wire x1="34.29" y1="35.5092" x2="25.2984" y2="35.5092" width="0.1524" layer="15"/>
@@ -1847,7 +1847,7 @@ design rules under a new name.</description>
 <contactref element="D4" pad="6"/>
 <contactref element="D2" pad="6"/>
 <contactref element="D1" pad="6"/>
-<contactref element="JA" pad="2"/>
+<contactref element="JB" pad="2"/>
 <wire x1="26.67" y1="34.29" x2="25.4" y2="34.29" width="0.1524" layer="15"/>
 <wire x1="27.5844" y1="35.2044" x2="26.67" y2="34.29" width="0.1524" layer="15"/>
 <wire x1="33.3756" y1="35.2044" x2="27.5844" y2="35.2044" width="0.1524" layer="15"/>
@@ -1884,7 +1884,7 @@ design rules under a new name.</description>
 <contactref element="D4" pad="4"/>
 <contactref element="D3" pad="4"/>
 <contactref element="D2" pad="4"/>
-<contactref element="JA" pad="3"/>
+<contactref element="JB" pad="3"/>
 <wire x1="49.53" y1="19.05" x2="48.26" y2="19.05" width="0.1524" layer="15"/>
 <wire x1="50.4444" y1="19.9644" x2="49.53" y2="19.05" width="0.1524" layer="15"/>
 <wire x1="60.0456" y1="19.9644" x2="50.4444" y2="19.9644" width="0.1524" layer="15"/>
@@ -1914,7 +1914,7 @@ design rules under a new name.</description>
 <contactref element="D4" pad="2"/>
 <contactref element="D3" pad="2"/>
 <contactref element="D2" pad="2"/>
-<contactref element="JA" pad="4"/>
+<contactref element="JB" pad="4"/>
 <wire x1="18.288" y1="19.05" x2="17.78" y2="19.05" width="0.1524" layer="16"/>
 <wire x1="20.2692" y1="17.0688" x2="18.288" y2="19.05" width="0.1524" layer="16"/>
 <wire x1="23.3172" y1="17.0688" x2="20.2692" y2="17.0688" width="0.1524" layer="16"/>
@@ -1949,7 +1949,7 @@ design rules under a new name.</description>
 <contactref element="D4" pad="1"/>
 <contactref element="D3" pad="1"/>
 <contactref element="D2" pad="1"/>
-<contactref element="JA" pad="7"/>
+<contactref element="JB" pad="7"/>
 <wire x1="15.8496" y1="19.05" x2="15.24" y2="19.05" width="0.1524" layer="16"/>
 <wire x1="18.1356" y1="16.764" x2="15.8496" y2="19.05" width="0.1524" layer="16"/>
 <wire x1="25.6032" y1="16.764" x2="18.1356" y2="16.764" width="0.1524" layer="16"/>
@@ -1980,7 +1980,7 @@ design rules under a new name.</description>
 <contactref element="D4" pad="9"/>
 <contactref element="D3" pad="9"/>
 <contactref element="D2" pad="9"/>
-<contactref element="JA" pad="8"/>
+<contactref element="JB" pad="8"/>
 <wire x1="43.2816" y1="57.15" x2="43.2816" y2="34.29" width="0.1524" layer="15"/>
 <wire x1="44.6532" y1="58.5216" x2="43.2816" y2="57.15" width="0.1524" layer="15"/>
 <wire x1="44.6532" y1="58.8264" x2="44.6532" y2="58.5216" width="0.1524" layer="15"/>
@@ -2023,7 +2023,7 @@ design rules under a new name.</description>
 <contactref element="D4" pad="10"/>
 <contactref element="D2" pad="10"/>
 <contactref element="D3" pad="10"/>
-<contactref element="JA" pad="9"/>
+<contactref element="JB" pad="9"/>
 <wire x1="15.8496" y1="34.29" x2="15.24" y2="34.29" width="0.1524" layer="16"/>
 <wire x1="17.8308" y1="36.2712" x2="15.8496" y2="34.29" width="0.1524" layer="16"/>
 <wire x1="25.908" y1="36.2712" x2="17.8308" y2="36.2712" width="0.1524" layer="16"/>
@@ -2050,7 +2050,7 @@ design rules under a new name.</description>
 <contactref element="D4" pad="5"/>
 <contactref element="D3" pad="5"/>
 <contactref element="D2" pad="5"/>
-<contactref element="JA" pad="10"/>
+<contactref element="JB" pad="10"/>
 <wire x1="25.908" y1="19.05" x2="25.4" y2="19.05" width="0.1524" layer="16"/>
 <wire x1="27.5844" y1="20.7264" x2="25.908" y2="19.05" width="0.1524" layer="16"/>
 <wire x1="28.194" y1="20.7264" x2="27.5844" y2="20.7264" width="0.1524" layer="16"/>
@@ -2277,7 +2277,7 @@ design rules under a new name.</description>
 </signal>
 <signal name="N$23">
 <contactref element="R1" pad="2"/>
-<contactref element="JB" pad="1"/>
+<contactref element="JC" pad="1"/>
 <wire x1="73.6092" y1="33.0708" x2="73.6092" y2="25.4508" width="0.1524" layer="15"/>
 <wire x1="70.866" y1="35.814" x2="73.6092" y2="33.0708" width="0.1524" layer="15"/>
 <wire x1="70.866" y1="43.434" x2="70.866" y2="35.814" width="0.1524" layer="15"/>
@@ -2288,7 +2288,7 @@ design rules under a new name.</description>
 </signal>
 <signal name="N$24">
 <contactref element="R2" pad="2"/>
-<contactref element="JB" pad="2"/>
+<contactref element="JC" pad="2"/>
 <wire x1="66.1416" y1="40.2336" x2="66.1416" y2="34.29" width="0.1524" layer="16"/>
 <wire x1="68.2752" y1="42.3672" x2="66.1416" y2="40.2336" width="0.1524" layer="16"/>
 <wire x1="68.2752" y1="53.7972" x2="68.2752" y2="42.3672" width="0.1524" layer="16"/>
@@ -2300,7 +2300,7 @@ design rules under a new name.</description>
 </signal>
 <signal name="N$25">
 <contactref element="R3" pad="2"/>
-<contactref element="JB" pad="3"/>
+<contactref element="JC" pad="3"/>
 <wire x1="73.6092" y1="45.1104" x2="73.6092" y2="43.2816" width="0.1524" layer="16"/>
 <wire x1="70.866" y1="47.8536" x2="73.6092" y2="45.1104" width="0.1524" layer="16"/>
 <wire x1="70.866" y1="56.0832" x2="70.866" y2="47.8536" width="0.1524" layer="16"/>
@@ -2310,7 +2310,7 @@ design rules under a new name.</description>
 </signal>
 <signal name="N$26">
 <contactref element="R4" pad="2"/>
-<contactref element="JB" pad="4"/>
+<contactref element="JC" pad="4"/>
 <wire x1="66.1416" y1="57.15" x2="66.1416" y2="52.1208" width="0.1524" layer="15"/>
 <wire x1="67.5132" y1="58.5216" x2="66.1416" y2="57.15" width="0.1524" layer="15"/>
 <wire x1="67.5132" y1="59.8932" x2="67.5132" y2="58.5216" width="0.1524" layer="15"/>
@@ -2318,7 +2318,7 @@ design rules under a new name.</description>
 <wire x1="66.1416" y1="52.1208" x2="66.04" y2="52.07" width="0.1524" layer="15"/>
 </signal>
 <signal name="N$27">
-<contactref element="JC" pad="1"/>
+<contactref element="JA" pad="1"/>
 <contactref element="LED1" pad="K"/>
 <wire x1="19.05" y1="54.5592" x2="19.05" y2="48.26" width="0.1524" layer="15"/>
 <wire x1="15.24" y1="58.3692" x2="19.05" y2="54.5592" width="0.1524" layer="15"/>
@@ -2326,7 +2326,7 @@ design rules under a new name.</description>
 </signal>
 <signal name="N$28">
 <contactref element="LED2" pad="K"/>
-<contactref element="JC" pad="2"/>
+<contactref element="JA" pad="2"/>
 <wire x1="17.526" y1="57.4548" x2="26.67" y2="48.3108" width="0.1524" layer="15"/>
 <wire x1="17.3736" y1="57.4548" x2="17.526" y2="57.4548" width="0.1524" layer="15"/>
 <wire x1="16.3068" y1="58.5216" x2="17.3736" y2="57.4548" width="0.1524" layer="15"/>
@@ -2335,7 +2335,7 @@ design rules under a new name.</description>
 <wire x1="26.67" y1="48.3108" x2="26.67" y2="48.26" width="0.1524" layer="15"/>
 </signal>
 <signal name="N$29">
-<contactref element="JC" pad="3"/>
+<contactref element="JA" pad="3"/>
 <contactref element="LED3" pad="K"/>
 <wire x1="35.5092" y1="48.3108" x2="41.91" y2="48.3108" width="0.1524" layer="16"/>
 <wire x1="26.67" y1="57.15" x2="35.5092" y2="48.3108" width="0.1524" layer="16"/>
@@ -2345,7 +2345,7 @@ design rules under a new name.</description>
 </signal>
 <signal name="N$30">
 <contactref element="LED4" pad="K"/>
-<contactref element="JC" pad="4"/>
+<contactref element="JA" pad="4"/>
 <wire x1="31.5468" y1="48.3108" x2="34.29" y2="48.3108" width="0.1524" layer="15"/>
 <wire x1="21.336" y1="58.5216" x2="31.5468" y2="48.3108" width="0.1524" layer="15"/>
 <wire x1="21.336" y1="58.8264" x2="21.336" y2="58.5216" width="0.1524" layer="15"/>
@@ -2356,7 +2356,7 @@ design rules under a new name.</description>
 <wire x1="17.8308" y1="60.96" x2="17.78" y2="60.96" width="0.1524" layer="15"/>
 </signal>
 <signal name="N$31">
-<contactref element="JC" pad="7"/>
+<contactref element="JA" pad="7"/>
 <contactref element="LED5" pad="K"/>
 <wire x1="43.1292" y1="48.3108" x2="49.53" y2="48.3108" width="0.1524" layer="16"/>
 <wire x1="33.9852" y1="57.4548" x2="43.1292" y2="48.3108" width="0.1524" layer="16"/>
@@ -2367,7 +2367,7 @@ design rules under a new name.</description>
 </signal>
 <signal name="N$32">
 <contactref element="PAD3" pad="1"/>
-<contactref element="JC" pad="8"/>
+<contactref element="JA" pad="8"/>
 <wire x1="23.9268" y1="60.96" x2="22.86" y2="60.96" width="0.1524" layer="16"/>
 <wire x1="25.2984" y1="62.3316" x2="23.9268" y2="60.96" width="0.1524" layer="16"/>
 <wire x1="66.5988" y1="62.3316" x2="25.2984" y2="62.3316" width="0.1524" layer="16"/>
@@ -2384,7 +2384,7 @@ design rules under a new name.</description>
 </signal>
 <signal name="N$33">
 <contactref element="PAD2" pad="1"/>
-<contactref element="JA" pad="5"/>
+<contactref element="JB" pad="5"/>
 <contactref element="PAD5" pad="1"/>
 <wire x1="46.9392" y1="58.5216" x2="45.72" y2="58.5216" width="0.1524" layer="15"/>
 <wire x1="48.3108" y1="59.8932" x2="46.9392" y2="58.5216" width="0.1524" layer="15"/>
@@ -2406,7 +2406,7 @@ design rules under a new name.</description>
 <wire x1="77.5716" y1="41.91" x2="77.47" y2="41.91" width="0.1524" layer="16"/>
 </signal>
 <signal name="N$34">
-<contactref element="JA" pad="6"/>
+<contactref element="JB" pad="6"/>
 <contactref element="PAD6" pad="1"/>
 <wire x1="46.7868" y1="60.96" x2="45.72" y2="60.96" width="0.1524" layer="15"/>
 <wire x1="48.1584" y1="62.3316" x2="46.7868" y2="60.96" width="0.1524" layer="15"/>
