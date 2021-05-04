@@ -441,7 +441,7 @@ Poznámka: Simulace pracuje v mnohem kratším časovém intervalu a tedy výstu
 Simulace kompletního projektu je zbytečná, protože výstupní hodnoty pro sedmisegmentový display jsou špatně čitelné a vyzkoušení veškeré funkcionality dohromady velmi náročné. 
 
 ### Blokové schéma top.vhdl
-![](images/top.svg)
+![](images/top.png)
 
 ## Video
 *Přidat*
