@@ -31,35 +31,34 @@ PADy 1, 2 a 3 slouží k připojení hallova senzoru. PAD1 je určen k připojen
 
 ![](images/PCB.png)
 
-|  | **Pmod JA** |  |
+| **PCB** | **Pmod JA** | **Port** |
+| :-: | :-: | :-: |
+| AN0 | 4 | D12 |
+| AN1 | 3 | A11 | 
+| AN2 | 2 | B11 | 
+| AN3 | 1 | G13 | 
+
+| **PCB** | **Pmod JB** | **Port** |
+| :-: | :-: | :-: |
+| a | 1 | E15 |
+| b | 2 | E16 | 
+| c | 3 | D15 | 
+| d | 4 | C15 | 
+| e | 7 | J17 | 
+| f | 8 | J18 | 
+| g | 9 | K15 | 
+| P | 10 | J15 |
+| GND | 5 |  |
+| 3,3V | 6 |  |
+
+| **PCB** | **Pmod JC** | **Port** |
 | :-: | :-: | :-: |
 | LED1 | 1 | U12 |
 | LED2 | 2 | V12 | 
 | LED3 | 3 | V10 | 
 | LED4 | 4 | V11 | 
-| LED5 | 7 | U14 | 
-| hall sensor | 8 | V14 | 
-
-|  | **Pmod JB** |  |
-| :-: | :-: | :-: |
-| a | 1 | G13 |
-| b | 2 | B11 | 
-| c | 3 | A11 | 
-| d | 4 | D12 | 
-| e | 7 | D13 | 
-| f | 8 | B18 | 
-| g | 9 | A18 | 
-| P | 10 | K16 |
-| GND | 5 |  |
-| 3,3V | 6 |  |
-
-
-|  | **Pmod JC** |  |
-| :-: | :-: | :-: |
-| AN0 | 4 | C15 |
-| AN1 | 3 | D15 | 
-| AN2 | 2 | E16 | 
-| AN3 | 1 | E15 | 
+| LED5 | 7 | T13 | 
+| hall sensor | 8 | U13 | 
 
 ## Programová část
 ### Popis řešení měření času
