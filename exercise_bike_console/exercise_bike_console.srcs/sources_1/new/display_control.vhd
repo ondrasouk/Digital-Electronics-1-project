@@ -97,20 +97,6 @@ begin
             en_i => s_en_t,
             unsigned(cnt_o) => s_total_time
         );
-
-
-    --------------------------------------------------------------------
-    -- p_total_time:
-    -- Counter counting seconds.
-    --------------------------------------------------------------------
-    p_total_time : process(s_en_t, s_reset)
-    begin
-        if rising_edge(s_reset) then
-            s_total_time <= (others => '0');
-        elsif rising_edge(s_en_t) then
-            s_total_time <= s_total_time + 1;
-        end if;
-    end process p_total_time;
     
     
     --------------------------------------------------------------------
@@ -122,24 +108,27 @@ begin
     begin
         if rising_edge(button_i) then
             s_rst_r_local <= '0';
-        elsif falling_edge(button_i) then
+        end if;
+        if falling_edge(button_i) then
             s_sel_display_local <= s_sel_display_local + 1;
             if (s_sel_display_local > x"3") then
                 s_sel_display_local <= x"0";
             end if;
             s_rst_r_local <= '1';
             s_rst_t_local <= "00";
-        else
-            if rising_edge(s_en_r) and (s_rst_t_local = "11") then
+        end if;
+        if rising_edge(s_en_r) then
+            if s_rst_t_local = "11" then
                 s_rst_t_local <= (others => '0');
                 s_rst_r_local <= '1';
                 s_reset <= '1';
-            elsif rising_edge(s_en_r) then
+            else
                 s_rst_t_local <= s_rst_t_local + 1;
-            elsif (s_reset = '1') and rising_edge(clk) and (s_total_time = 0) then
-                s_reset <= '0';
-                s_rst_t_local <= (others => '0');
             end if;
+        end if;
+        if (s_reset = '1') and rising_edge(clk) and (s_total_time = 0) then
+            s_reset <= '0';
+            s_rst_t_local <= (others => '0');
         end if;
     end process p_display_selection;
     

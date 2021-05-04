@@ -107,18 +107,21 @@ begin
             s_etime_local <= (others => '0');
             s_distance_local <= (others => '0');
             s_skip <= '1';
-        elsif rising_edge(clk) and ((s_rst_t = '1') and (s_etime = x"0000")) then
+        elsif ((s_rst_t = '1') and (s_etime = x"0000")) then
             s_rst_t <= '0'; -- on the next clock take down the reset for timer
-        elsif rising_edge(hall_sensor_i) and (s_skip = '1') then
-            s_rst_t <= '1';
-            s_skip <= '0';
-        elsif rising_edge(hall_sensor_i) and not(s_etime = x"0000") then
-            s_etime_local <= unsigned(s_etime);
-            s_distance_local <= s_distance_local + 1;
-            s_rst_t <= '1'; -- reset the timer and clock divider
-        elsif (rising_edge(clk) and (unsigned(s_etime) > g_ETIME_ZERO)) then
+        elsif (unsigned(s_etime) > g_ETIME_ZERO) then
             s_etime_local <= (others => '0');
             s_skip <= '1';
+        end if;
+        if rising_edge(hall_sensor_i) then
+            if (s_skip = '1') and (reset = '0') then
+                s_rst_t <= '1';
+                s_skip <= '0';
+            elsif reset = '0' then
+                s_etime_local <= unsigned(s_etime);
+                s_distance_local <= s_distance_local + 1;
+                s_rst_t <= '1'; -- reset the timer and clock divider
+            end if;
         end if;
     end process p_etime;
     
@@ -139,25 +142,29 @@ begin
             s_inertia_local <= (others => '0');
             s_inertia1_local <= (others => '0');
             s_work_local <= (others => '0');
-        elsif (s_etime_local = x"0000") and not (reset = '1') then --flywheel is stopped
+        end if;
+        if (s_etime_local = x"0000") and (reset = '0') then --flywheel is stopped
             s_speed_local <= (others => '0');
             s_speed1_local <= (others => '0');
             s_speed2_local <= (others => '0');
             s_speed3_local <= (others => '0');
             s_avg_speed_local <= (others => '0');
             s_inertia_local <= (others => '0');
-        elsif rising_edge(hall_sensor_i) and not (reset = '1') then
-            s_speed3_local <= s_speed2_local;
-            s_speed2_local <= s_speed1_local;
-            s_speed1_local <= s_speed_local;
-            s_speed_local <= (g_WHEEL_CIRCUMFERENCE*10000/resize(s_etime_local, 22)); -- m*1e-6/s*1e-4=cm/s
-            s_avg_speed_local <= resize(resize(s_speed_local+s_speed1_local+s_speed2_local+s_speed3_local, 24)/4, 22);
-            if (s_max_speed_local < s_avg_speed_local) then
-                s_max_speed_local <= s_avg_speed_local;
+        end if;
+        if rising_edge(hall_sensor_i) then
+            if reset = '0' then
+                s_speed3_local <= s_speed2_local;
+                s_speed2_local <= s_speed1_local;
+                s_speed1_local <= s_speed_local;
+                s_speed_local <= (g_WHEEL_CIRCUMFERENCE*10000/resize(s_etime_local, 22)); -- m*1e-6/s*1e-4=cm/s
+                s_avg_speed_local <= resize(resize(s_speed_local+s_speed1_local+s_speed2_local+s_speed3_local, 24)/4, 22);
+                if (s_max_speed_local < s_avg_speed_local) then
+                    s_max_speed_local <= s_avg_speed_local;
+                end if;
+                s_inertia1_local <= s_inertia_local;
+                s_inertia_local <= resize(g_INERTIA_MOMENT/((s_etime_local * s_etime_local)/5000), 16);
+                s_work_local <= s_work_local + s_inertia_local - s_inertia1_local + g_RESISTLOAD; -- in Joules
             end if;
-            s_inertia1_local <= s_inertia_local;
-            s_inertia_local <= resize(g_INERTIA_MOMENT/((s_etime_local * s_etime_local)/5000), 16);
-            s_work_local <= s_work_local + s_inertia_local - s_inertia1_local + g_RESISTLOAD; -- in Joules
         end if;
     end process p_calc;
     
