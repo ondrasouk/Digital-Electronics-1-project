@@ -20,7 +20,36 @@ V našem případě jsme se rozhodli pro snímání otáček použít čidlo [44
 Pro následní zobrazení měřené veličiny byl využit 4x7 segmentový displej a tři ledky pro indikaci zobrazovaného výstupu (zapnuto/vypnuto, přepínání zobrazení, reset systému).
 
 ## Popis zapojení 
-TODO
+| **Pmod JA** |
+| :-: | :-: | :-: |
+| a | 1 | G13 |
+| b | 2 | B11 | 
+| c | 3 | A11 | 
+| d | 4 | D12 | 
+| e | 7 | D13 | 
+| f | 8 | B18 | 
+| g | 9 | A18 | 
+| P | 10 | K16 |
+| GND | 5 |  |
+| 3,3V | 6 |  |
+
+
+| **Pmod JB** |
+| :-: | :-: | :-: |
+| AN0 | 4 | C15 |
+| AN1 | 3 | D15 | 
+| AN2 | 2 | E16 | 
+| AN3 | 1 | E15 | 
+
+| **Pmod JC** |
+| :-: | :-: | :-: |
+| LED1 | 1 | D4 |
+| LED2 | 2 | D3 | 
+| LED3 | 3 | F4 | 
+| LED4 | 4 | F3 | 
+| LED5 | 7 | E2 | 
+| hall sensor | 8 | D2 | 
+
 
 ## Programová část
 ### Popis řešení měření času
