@@ -22,6 +22,11 @@ Pro následní zobrazení měřené veličiny byl využit 4x7 segmentový disple
 
 
 ## Popis zapojení 
+Zapojení a PCB jsou navrženy v programu Eagle. 
+V zapojení jsou použity 7 segmentové displeje se společnou anodou. Stejné segmenty jednotlivých digitů jsou pospojovány. Port JC slouží k přepínání napájení mezi jednotlivými digity. K portu JB jsou připojeny jednotlivé skupiny segmentů a k portu JA jsou připojeny LED a hallův senzor. Výhodnější by bylo pouřít jednou součástku obsahující 4 digity (stejně jako na desce Nexys A7), ale Eagle takovou součástku neobsahuje.
+PADy 1, 2 a 3 slouží k připojení hallova senzoru. PAD1 je určen k připojení +5V protože použitý hallův senzor pracuje od 4,5V, ale na Pmod porty mají 3,3V. 
+
+
 ![](images/schema.png)
 
 ![](images/PCB.png)
