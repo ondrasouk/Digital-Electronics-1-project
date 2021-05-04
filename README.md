@@ -20,7 +20,7 @@ V našem případě jsme se rozhodli pro snímání otáček použít čidlo [44
 Pro následní zobrazení měřené veličiny byl využit 4x7 segmentový displej a tři ledky pro indikaci zobrazovaného výstupu (zapnuto/vypnuto, přepínání zobrazení, reset systému).
 
 ## Popis zapojení 
-
+|  | **Pmod JA** |  |
 | :-: | :-: | :-: |
 | a | 1 | G13 |
 | b | 2 | B11 | 
