@@ -28,6 +28,15 @@ Pro následní zobrazení měřené veličiny byl využit 4x7 segmentový disple
 
 |  | **Pmod JA** |  |
 | :-: | :-: | :-: |
+| LED1 | 1 | U12 |
+| LED2 | 2 | V12 | 
+| LED3 | 3 | V10 | 
+| LED4 | 4 | V11 | 
+| LED5 | 7 | U14 | 
+| hall sensor | 8 | V14 | 
+
+|  | **Pmod JB** |  |
+| :-: | :-: | :-: |
 | a | 1 | G13 |
 | b | 2 | B11 | 
 | c | 3 | A11 | 
@@ -40,22 +49,12 @@ Pro následní zobrazení měřené veličiny byl využit 4x7 segmentový disple
 | 3,3V | 6 |  |
 
 
-|  | **Pmod JB** |  |
+|  | **Pmod JC** |  |
 | :-: | :-: | :-: |
 | AN0 | 4 | C15 |
 | AN1 | 3 | D15 | 
 | AN2 | 2 | E16 | 
 | AN3 | 1 | E15 | 
-
-|  | **Pmod JC** |  |
-| :-: | :-: | :-: |
-| LED1 | 1 | U12 |
-| LED2 | 2 | V12 | 
-| LED3 | 3 | V10 | 
-| LED4 | 4 | V11 | 
-| LED5 | 7 | U14 | 
-| hall sensor | 8 | V14 | 
-
 
 ## Programová část
 ### Popis řešení měření času
