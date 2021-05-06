@@ -151,7 +151,7 @@ begin
             s_avg_speed_local <= (others => '0');
             s_inertia_local <= (others => '0');
         end if;
-        if rising_edge(hall_sensor_i) then
+        if rising_edge(hall_sensor_i) and not(s_etime_local = x"0000") then
             if reset = '0' then
                 s_speed3_local <= s_speed2_local;
                 s_speed2_local <= s_speed1_local;

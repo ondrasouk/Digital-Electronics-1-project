@@ -2,8 +2,8 @@
 # Webtalk v2020.2 (64-bit)
 # SW Build 3064766 on Wed Nov 18 09:12:47 MST 2020
 # IP Build 3064653 on Wed Nov 18 14:17:31 MST 2020
-# Start of session at: Sat May  1 17:07:25 2021
-# Process ID: 22477
+# Start of session at: Thu May  6 21:37:35 2021
+# Process ID: 28322
 # Current directory: /run/media/ondra/enc/Sync/BPC-EKT2L/BPC-DE1/projekt/Digital-Electronics-1-project/exercise_bike_console/exercise_bike_console.sim/sim_1/behav/xsim
 # Command line: wbtcv -mode batch -source /run/media/ondra/enc/Sync/BPC-EKT2L/BPC-DE1/projekt/Digital-Electronics-1-project/exercise_bike_console/exercise_bike_console.sim/sim_1/behav/xsim/xsim.dir/tb_speedometer_behav/webtalk/xsim_webtalk.tcl -notrace
 # Log file: /run/media/ondra/enc/Sync/BPC-EKT2L/BPC-DE1/projekt/Digital-Electronics-1-project/exercise_bike_console/exercise_bike_console.sim/sim_1/behav/xsim/webtalk.log

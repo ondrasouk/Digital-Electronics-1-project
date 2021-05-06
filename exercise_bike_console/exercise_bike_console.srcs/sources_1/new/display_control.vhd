@@ -57,6 +57,7 @@ architecture Behavioral of display_control is
     signal s_en_r : STD_LOGIC;                          -- clock enable for reset
     signal s_rst_r_local : STD_LOGIC := '1';            -- reset for timer counting time to reset
     signal s_reset : STD_LOGIC := '1';                  -- local signal for global reset signal
+    signal s_button_last_local : std_logic := '0';
     signal s_temp_local : unsigned(22 - 1 downto 0);
     signal s_total_time : unsigned(19 - 1 downto 0) := (others => '0'); -- time from start or reset in seconds
     signal s_sel_display_local : unsigned(4 - 1 downto 0) := x"0";      -- display selection
@@ -106,21 +107,23 @@ begin
     --------------------------------------------------------------------
     p_display_selection : process(clk, button_i, s_en_r)
     begin
-        if rising_edge(button_i) then
+        if (button_i = '1') and (s_button_last_local = '0') then
             s_rst_r_local <= '0';
-        end if;
-        if falling_edge(button_i) then
+            s_button_last_local <= '1';
+        elsif (button_i = '0') and (s_button_last_local = '1') then
             s_sel_display_local <= s_sel_display_local + 1;
             if (s_sel_display_local > x"3") then
                 s_sel_display_local <= x"0";
             end if;
             s_rst_r_local <= '1';
             s_rst_t_local <= "00";
+            s_button_last_local <= '0';
         end if;
         if rising_edge(s_en_r) then
             if s_rst_t_local = "11" then
                 s_rst_t_local <= (others => '0');
                 s_rst_r_local <= '1';
+                s_sel_display_local <= x"4";
                 s_reset <= '1';
             else
                 s_rst_t_local <= s_rst_t_local + 1;

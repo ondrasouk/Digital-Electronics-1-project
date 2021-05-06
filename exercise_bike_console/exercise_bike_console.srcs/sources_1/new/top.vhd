@@ -35,24 +35,24 @@ entity top is
     Port (
         CLK100MHZ   : in STD_LOGIC;
         btn0        : in STD_LOGIC; -- right BTN0 button
-        D12         : out STD_LOGIC; -- AN0
-        A11         : out STD_LOGIC; -- AN1
-        B11         : out STD_LOGIC; -- AN2
-        G13         : out STD_LOGIC; -- AN3
-        E15         : out STD_LOGIC; -- A
-        E16         : out STD_LOGIC; -- B
-        D15         : out STD_LOGIC; -- C
-        C15         : out STD_LOGIC; -- D
-        J17         : out STD_LOGIC; -- E
-        J18         : out STD_LOGIC; -- F
-        K15         : out STD_LOGIC; -- G
-        J15         : out STD_LOGIC; -- P (DP)
-        U12         : out STD_LOGIC; -- LED1
-        V12         : out STD_LOGIC; -- LED2
-        V10         : out STD_LOGIC; -- LED3
-        V11         : out STD_LOGIC; -- LED4
-        T13         : out STD_LOGIC; -- LED5
-        U13         : in STD_LOGIC  -- Hall sensor
+        AN0         : out STD_LOGIC; -- AN0
+        AN1         : out STD_LOGIC; -- AN1
+        AN2         : out STD_LOGIC; -- AN2
+        AN3         : out STD_LOGIC; -- AN3
+        A           : out STD_LOGIC; -- A
+        B           : out STD_LOGIC; -- B
+        C           : out STD_LOGIC; -- C
+        D           : out STD_LOGIC; -- D
+        E           : out STD_LOGIC; -- E
+        F           : out STD_LOGIC; -- F
+        G           : out STD_LOGIC; -- G
+        P           : out STD_LOGIC; -- P (DP)
+        LED1        : out STD_LOGIC; -- LED1
+        LED2        : out STD_LOGIC; -- LED2
+        LED3        : out STD_LOGIC; -- LED3
+        LED4        : out STD_LOGIC; -- LED4
+        LED5        : out STD_LOGIC; -- LED5
+        HALL        : in STD_LOGIC  -- Hall sensor
     );
 end top;
 
@@ -79,7 +79,7 @@ begin
         port map(
             clk             => CLK100MHZ,
             reset           => s_reset,
-            hall_sensor_i   => U13,
+            hall_sensor_i   => HALL,
             speed_o         => s_speed,
             distance_o      => s_distance,
             calories_o      => s_calories,
@@ -97,11 +97,11 @@ begin
             max_speed_i => s_max_speed,
             button_i    => btn0,
             reset       => s_reset,
-            leds_o(0)   => U12,
-            leds_o(1)   => V12,
-            leds_o(2)   => V10,
-            leds_o(3)   => V11,
-            leds_o(4)   => T13
+            leds_o(0)   => LED1,
+            leds_o(1)   => LED2,
+            leds_o(2)   => LED3,
+            leds_o(3)   => LED4,
+            leds_o(4)   => LED5
         );
 
     --------------------------------------------------------------------
@@ -115,18 +115,18 @@ begin
             data2_i     => s_data2,
             data3_i     => s_data3,
             dp_i        => s_dp,
-            seg_o(6)    => E15,
-            seg_o(5)    => E16,
-            seg_o(4)    => D15,
-            seg_o(3)    => C15,
-            seg_o(2)    => J17,
-            seg_o(1)    => J18,
-            seg_o(0)    => K15,
-            dp_o        => J15,
-            dig_o(0)    => D12,
-            dig_o(1)    => A11,
-            dig_o(2)    => B11,
-            dig_o(3)    => G13
+            seg_o(6)    => A,
+            seg_o(5)    => B,
+            seg_o(4)    => C,
+            seg_o(3)    => D,
+            seg_o(2)    => E,
+            seg_o(1)    => F,
+            seg_o(0)    => G,
+            dp_o        => P,
+            dig_o(0)    => AN0,
+            dig_o(1)    => AN1,
+            dig_o(2)    => AN2,
+            dig_o(3)    => AN3
         );
 
 end Behavioral;

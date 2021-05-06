@@ -160,7 +160,7 @@ V Programu se jedná o `g_RESISTLOAD` a o `g_INERTIA_MOMENT`, kde `g_INERTIA_MOM
             s_avg_speed_local <= (others => '0');
             s_inertia_local <= (others => '0');
         end if;
-        if rising_edge(hall_sensor_i) then
+        if rising_edge(hall_sensor_i) and not(s_etime_local = x"0000") then
             if reset = '0' then
                 s_speed3_local <= s_speed2_local;
                 s_speed2_local <= s_speed1_local;
@@ -257,21 +257,23 @@ V procesu `p_display_control` se pomocí operací děleno a modulo rozdělují j
     --------------------------------------------------------------------
     p_display_selection : process(clk, button_i, s_en_r)
     begin
-        if rising_edge(button_i) then
+        if (button_i = '1') and (s_button_last_local = '0') then
             s_rst_r_local <= '0';
-        end if;
-        if falling_edge(button_i) then
+            s_button_last_local <= '1';
+        elsif (button_i = '0') and (s_button_last_local = '1') then
             s_sel_display_local <= s_sel_display_local + 1;
             if (s_sel_display_local > x"3") then
                 s_sel_display_local <= x"0";
             end if;
             s_rst_r_local <= '1';
             s_rst_t_local <= "00";
+            s_button_last_local <= '0';
         end if;
         if rising_edge(s_en_r) then
             if s_rst_t_local = "11" then
                 s_rst_t_local <= (others => '0');
                 s_rst_r_local <= '1';
+                s_sel_display_local <= x"4";
                 s_reset <= '1';
             else
                 s_rst_t_local <= s_rst_t_local + 1;
@@ -445,24 +447,24 @@ entity top is
     Port (
         CLK100MHZ   : in STD_LOGIC;
         btn0        : in STD_LOGIC; -- right BTN0 button
-        D12         : out STD_LOGIC; -- AN0
-        A11         : out STD_LOGIC; -- AN1
-        B11         : out STD_LOGIC; -- AN2
-        G13         : out STD_LOGIC; -- AN3
-        E15         : out STD_LOGIC; -- A
-        E16         : out STD_LOGIC; -- B
-        D15         : out STD_LOGIC; -- C
-        C15         : out STD_LOGIC; -- D
-        J17         : out STD_LOGIC; -- E
-        J18         : out STD_LOGIC; -- F
-        K15         : out STD_LOGIC; -- G
-        J15         : out STD_LOGIC; -- P (DP)
-        U12         : out STD_LOGIC; -- LED1
-        V12         : out STD_LOGIC; -- LED2
-        V10         : out STD_LOGIC; -- LED3
-        V11         : out STD_LOGIC; -- LED4
-        T13         : out STD_LOGIC; -- LED5
-        U13         : in STD_LOGIC  -- Hall sensor
+        AN0         : out STD_LOGIC; -- AN0
+        AN1         : out STD_LOGIC; -- AN1
+        AN2         : out STD_LOGIC; -- AN2
+        AN3         : out STD_LOGIC; -- AN3
+        A           : out STD_LOGIC; -- A
+        B           : out STD_LOGIC; -- B
+        C           : out STD_LOGIC; -- C
+        D           : out STD_LOGIC; -- D
+        E           : out STD_LOGIC; -- E
+        F           : out STD_LOGIC; -- F
+        G           : out STD_LOGIC; -- G
+        P           : out STD_LOGIC; -- P (DP)
+        LED1        : out STD_LOGIC; -- LED1
+        LED2        : out STD_LOGIC; -- LED2
+        LED3        : out STD_LOGIC; -- LED3
+        LED4        : out STD_LOGIC; -- LED4
+        LED5        : out STD_LOGIC; -- LED5
+        HALL        : in STD_LOGIC  -- Hall sensor
     );
 end top;
 
@@ -489,7 +491,7 @@ begin
         port map(
             clk             => CLK100MHZ,
             reset           => s_reset,
-            hall_sensor_i   => U13,
+            hall_sensor_i   => HALL,
             speed_o         => s_speed,
             distance_o      => s_distance,
             calories_o      => s_calories,
@@ -507,11 +509,11 @@ begin
             max_speed_i => s_max_speed,
             button_i    => btn0,
             reset       => s_reset,
-            leds_o(0)   => U12,
-            leds_o(1)   => V12,
-            leds_o(2)   => V10,
-            leds_o(3)   => V11,
-            leds_o(4)   => T13
+            leds_o(0)   => LED1,
+            leds_o(1)   => LED2,
+            leds_o(2)   => LED3,
+            leds_o(3)   => LED4,
+            leds_o(4)   => LED5
         );
 
     --------------------------------------------------------------------
@@ -525,24 +527,22 @@ begin
             data2_i     => s_data2,
             data3_i     => s_data3,
             dp_i        => s_dp,
-            seg_o(6)    => E15,
-            seg_o(5)    => E16,
-            seg_o(4)    => D15,
-            seg_o(3)    => C15,
-            seg_o(2)    => J17,
-            seg_o(1)    => J18,
-            seg_o(0)    => K15,
-            dp_o        => J15,
-            dig_o(0)    => D12,
-            dig_o(1)    => A11,
-            dig_o(2)    => B11,
-            dig_o(3)    => G13
+            seg_o(6)    => A,
+            seg_o(5)    => B,
+            seg_o(4)    => C,
+            seg_o(3)    => D,
+            seg_o(2)    => E,
+            seg_o(1)    => F,
+            seg_o(0)    => G,
+            dp_o        => P,
+            dig_o(0)    => AN0,
+            dig_o(1)    => AN1,
+            dig_o(2)    => AN2,
+            dig_o(3)    => AN3
         );
+
 end Behavioral;
 ```
-
-Vygenerovat bitstream se nepodařilo kvůli chybě placeru.
-![](images/placer_error.png)
 ## Video
 
 [Link na video prezentace](https://www.youtube.com/watch?v=75vinimI-LY&feature=youtu.be)

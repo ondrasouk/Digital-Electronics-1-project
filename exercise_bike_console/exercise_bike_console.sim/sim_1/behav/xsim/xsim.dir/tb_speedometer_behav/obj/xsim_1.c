@@ -57,7 +57,6 @@ extern int main(int, char**);
 IKI_DLLESPEC extern void execute_52(char*, char *);
 IKI_DLLESPEC extern void execute_53(char*, char *);
 IKI_DLLESPEC extern void execute_54(char*, char *);
-IKI_DLLESPEC extern void execute_55(char*, char *);
 IKI_DLLESPEC extern void execute_46(char*, char *);
 IKI_DLLESPEC extern void execute_47(char*, char *);
 IKI_DLLESPEC extern void execute_48(char*, char *);
@@ -71,12 +70,12 @@ IKI_DLLESPEC extern void transaction_0(char*, char*, unsigned, unsigned, unsigne
 IKI_DLLESPEC extern void transaction_1(char*, char*, unsigned, unsigned, unsigned);
 IKI_DLLESPEC extern void transaction_2(char*, char*, unsigned, unsigned, unsigned);
 IKI_DLLESPEC extern void vhdl_transfunc_eventcallback(char*, char*, unsigned, unsigned, unsigned, char *);
-funcp funcTab[17] = {(funcp)execute_52, (funcp)execute_53, (funcp)execute_54, (funcp)execute_55, (funcp)execute_46, (funcp)execute_47, (funcp)execute_48, (funcp)execute_49, (funcp)execute_50, (funcp)execute_51, (funcp)execute_42, (funcp)execute_44, (funcp)execute_45, (funcp)transaction_0, (funcp)transaction_1, (funcp)transaction_2, (funcp)vhdl_transfunc_eventcallback};
-const int NumRelocateId= 17;
+funcp funcTab[16] = {(funcp)execute_52, (funcp)execute_53, (funcp)execute_54, (funcp)execute_46, (funcp)execute_47, (funcp)execute_48, (funcp)execute_49, (funcp)execute_50, (funcp)execute_51, (funcp)execute_42, (funcp)execute_44, (funcp)execute_45, (funcp)transaction_0, (funcp)transaction_1, (funcp)transaction_2, (funcp)vhdl_transfunc_eventcallback};
+const int NumRelocateId= 16;
 
 void relocate(char *dp)
 {
-	iki_relocate(dp, "xsim.dir/tb_speedometer_behav/xsim.reloc",  (void **)funcTab, 17);
+	iki_relocate(dp, "xsim.dir/tb_speedometer_behav/xsim.reloc",  (void **)funcTab, 16);
 	iki_vhdl_file_variable_register(dp + 7576);
 	iki_vhdl_file_variable_register(dp + 7632);
 

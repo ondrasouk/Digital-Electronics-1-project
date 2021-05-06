@@ -1,4 +1,12 @@
 Vivado Simulator 2020.2
 Time resolution is 1 ps
 Note: Stimulus begin
-Time: 0 ps  Iteration: 0  Process: /tb_speedometer/p_stimulus  File: /run/media/ondra/enc/Sync/BPC-EKT2L/BPC-DE1/projekt/Digital-Electronics-1-project/exercise_bike_console/exercise_bike_console.srcs/sim_1/new/tb_speedometer.vhd
+Time: 0 ps  Iteration: 0  Process: /tb_display_control/p_stimulus  File: /run/media/ondra/enc/Sync/BPC-EKT2L/BPC-DE1/projekt/Digital-Electronics-1-project/exercise_bike_console/exercise_bike_console.srcs/sim_1/new/tb_display_control.vhd
+Note: Display tests completed
+Time: 430 ns  Iteration: 1  Process: /tb_display_control/p_stimulus  File: /run/media/ondra/enc/Sync/BPC-EKT2L/BPC-DE1/projekt/Digital-Electronics-1-project/exercise_bike_console/exercise_bike_console.srcs/sim_1/new/tb_display_control.vhd
+Note: Stimulus begin
+Time: 0 ps  Iteration: 0  Process: /tb_display_control/p_stimulus  File: /run/media/ondra/enc/Sync/BPC-EKT2L/BPC-DE1/projekt/Digital-Electronics-1-project/exercise_bike_console/exercise_bike_console.srcs/sim_1/new/tb_display_control.vhd
+Note: Display tests completed
+Time: 430 ns  Iteration: 1  Process: /tb_display_control/p_stimulus  File: /run/media/ondra/enc/Sync/BPC-EKT2L/BPC-DE1/projekt/Digital-Electronics-1-project/exercise_bike_console/exercise_bike_console.srcs/sim_1/new/tb_display_control.vhd
+Note: Stimulus completed
+Time: 1315 ns  Iteration: 0  Process: /tb_display_control/p_stimulus  File: /run/media/ondra/enc/Sync/BPC-EKT2L/BPC-DE1/projekt/Digital-Electronics-1-project/exercise_bike_console/exercise_bike_console.srcs/sim_1/new/tb_display_control.vhd

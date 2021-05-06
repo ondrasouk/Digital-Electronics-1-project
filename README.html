@@ -333,7 +333,7 @@ V Programu se jedná o <code>g_RESISTLOAD</code> a o <code>g_INERTIA_MOMENT</cod
             s_avg_speed_local <span class="pl-k">&lt;=</span> (<span class="pl-k">others</span> <span class="pl-k">=&gt;</span> <span class="pl-c1">'0'</span>);
             s_inertia_local <span class="pl-k">&lt;=</span> (<span class="pl-k">others</span> <span class="pl-k">=&gt;</span> <span class="pl-c1">'0'</span>);
         <span class="pl-k">end</span> <span class="pl-k">if</span>;
-        <span class="pl-k">if</span> <span class="pl-c1">rising_edge</span>(hall_sensor_i) <span class="pl-k">then</span>
+        <span class="pl-k">if</span> <span class="pl-c1">rising_edge</span>(hall_sensor_i) <span class="pl-k">and</span> <span class="pl-k">not</span>(s_etime_local <span class="pl-k">=</span> <span class="pl-c1">x"0000"</span>) <span class="pl-k">then</span>
             <span class="pl-k">if</span> reset <span class="pl-k">=</span> <span class="pl-c1">'0'</span> <span class="pl-k">then</span>
                 s_speed3_local <span class="pl-k">&lt;=</span> s_speed2_local;
                 s_speed2_local <span class="pl-k">&lt;=</span> s_speed1_local;
@@ -423,21 +423,23 @@ V Programu se jedná o <code>g_RESISTLOAD</code> a o <code>g_INERTIA_MOMENT</cod
     <span class="pl-c"><span class="pl-c">--</span>------------------------------------------------------------------</span>
     p_display_selection : <span class="pl-k">process</span>(clk, button_i, s_en_r)
     <span class="pl-k">begin</span>
-        <span class="pl-k">if</span> <span class="pl-c1">rising_edge</span>(button_i) <span class="pl-k">then</span>
+        <span class="pl-k">if</span> (button_i <span class="pl-k">=</span> <span class="pl-c1">'1'</span>) <span class="pl-k">and</span> (s_button_last_local <span class="pl-k">=</span> <span class="pl-c1">'0'</span>) <span class="pl-k">then</span>
             s_rst_r_local <span class="pl-k">&lt;=</span> <span class="pl-c1">'0'</span>;
-        <span class="pl-k">end</span> <span class="pl-k">if</span>;
-        <span class="pl-k">if</span> <span class="pl-c1">falling_edge</span>(button_i) <span class="pl-k">then</span>
+            s_button_last_local <span class="pl-k">&lt;=</span> <span class="pl-c1">'1'</span>;
+        <span class="pl-k">elsif</span> (button_i <span class="pl-k">=</span> <span class="pl-c1">'0'</span>) <span class="pl-k">and</span> (s_button_last_local <span class="pl-k">=</span> <span class="pl-c1">'1'</span>) <span class="pl-k">then</span>
             s_sel_display_local <span class="pl-k">&lt;=</span> s_sel_display_local <span class="pl-k">+</span> <span class="pl-c1">1</span>;
             <span class="pl-k">if</span> (s_sel_display_local <span class="pl-k">&gt;</span> <span class="pl-c1">x"3"</span>) <span class="pl-k">then</span>
                 s_sel_display_local <span class="pl-k">&lt;=</span> <span class="pl-c1">x"0"</span>;
             <span class="pl-k">end</span> <span class="pl-k">if</span>;
             s_rst_r_local <span class="pl-k">&lt;=</span> <span class="pl-c1">'1'</span>;
             s_rst_t_local <span class="pl-k">&lt;=</span> <span class="pl-c1">"00"</span>;
+            s_button_last_local <span class="pl-k">&lt;=</span> <span class="pl-c1">'0'</span>;
         <span class="pl-k">end</span> <span class="pl-k">if</span>;
         <span class="pl-k">if</span> <span class="pl-c1">rising_edge</span>(s_en_r) <span class="pl-k">then</span>
             <span class="pl-k">if</span> s_rst_t_local <span class="pl-k">=</span> <span class="pl-c1">"11"</span> <span class="pl-k">then</span>
                 s_rst_t_local <span class="pl-k">&lt;=</span> (<span class="pl-k">others</span> <span class="pl-k">=&gt;</span> <span class="pl-c1">'0'</span>);
                 s_rst_r_local <span class="pl-k">&lt;=</span> <span class="pl-c1">'1'</span>;
+                s_sel_display_local <span class="pl-k">&lt;=</span> <span class="pl-c1">x"4"</span>;
                 s_reset <span class="pl-k">&lt;=</span> <span class="pl-c1">'1'</span>;
             <span class="pl-k">else</span>
                 s_rst_t_local <span class="pl-k">&lt;=</span> s_rst_t_local <span class="pl-k">+</span> <span class="pl-c1">1</span>;
@@ -607,24 +609,24 @@ V Programu se jedná o <code>g_RESISTLOAD</code> a o <code>g_INERTIA_MOMENT</cod
     <span class="pl-k">Port</span> (
         CLK100MHZ   : <span class="pl-k">in</span> <span class="pl-c1">STD_LOGIC</span>;
         btn0        : <span class="pl-k">in</span> <span class="pl-c1">STD_LOGIC</span>; <span class="pl-c"><span class="pl-c">--</span> right BTN0 button</span>
-        D12         : <span class="pl-k">out</span> <span class="pl-c1">STD_LOGIC</span>; <span class="pl-c"><span class="pl-c">--</span> AN0</span>
-        A11         : <span class="pl-k">out</span> <span class="pl-c1">STD_LOGIC</span>; <span class="pl-c"><span class="pl-c">--</span> AN1</span>
-        B11         : <span class="pl-k">out</span> <span class="pl-c1">STD_LOGIC</span>; <span class="pl-c"><span class="pl-c">--</span> AN2</span>
-        G13         : <span class="pl-k">out</span> <span class="pl-c1">STD_LOGIC</span>; <span class="pl-c"><span class="pl-c">--</span> AN3</span>
-        E15         : <span class="pl-k">out</span> <span class="pl-c1">STD_LOGIC</span>; <span class="pl-c"><span class="pl-c">--</span> A</span>
-        E16         : <span class="pl-k">out</span> <span class="pl-c1">STD_LOGIC</span>; <span class="pl-c"><span class="pl-c">--</span> B</span>
-        D15         : <span class="pl-k">out</span> <span class="pl-c1">STD_LOGIC</span>; <span class="pl-c"><span class="pl-c">--</span> C</span>
-        C15         : <span class="pl-k">out</span> <span class="pl-c1">STD_LOGIC</span>; <span class="pl-c"><span class="pl-c">--</span> D</span>
-        J17         : <span class="pl-k">out</span> <span class="pl-c1">STD_LOGIC</span>; <span class="pl-c"><span class="pl-c">--</span> E</span>
-        J18         : <span class="pl-k">out</span> <span class="pl-c1">STD_LOGIC</span>; <span class="pl-c"><span class="pl-c">--</span> F</span>
-        K15         : <span class="pl-k">out</span> <span class="pl-c1">STD_LOGIC</span>; <span class="pl-c"><span class="pl-c">--</span> G</span>
-        J15         : <span class="pl-k">out</span> <span class="pl-c1">STD_LOGIC</span>; <span class="pl-c"><span class="pl-c">--</span> P (DP)</span>
-        U12         : <span class="pl-k">out</span> <span class="pl-c1">STD_LOGIC</span>; <span class="pl-c"><span class="pl-c">--</span> LED1</span>
-        V12         : <span class="pl-k">out</span> <span class="pl-c1">STD_LOGIC</span>; <span class="pl-c"><span class="pl-c">--</span> LED2</span>
-        V10         : <span class="pl-k">out</span> <span class="pl-c1">STD_LOGIC</span>; <span class="pl-c"><span class="pl-c">--</span> LED3</span>
-        V11         : <span class="pl-k">out</span> <span class="pl-c1">STD_LOGIC</span>; <span class="pl-c"><span class="pl-c">--</span> LED4</span>
-        T13         : <span class="pl-k">out</span> <span class="pl-c1">STD_LOGIC</span>; <span class="pl-c"><span class="pl-c">--</span> LED5</span>
-        U13         : <span class="pl-k">in</span> <span class="pl-c1">STD_LOGIC</span>  <span class="pl-c"><span class="pl-c">--</span> Hall sensor</span>
+        AN0         : <span class="pl-k">out</span> <span class="pl-c1">STD_LOGIC</span>; <span class="pl-c"><span class="pl-c">--</span> AN0</span>
+        AN1         : <span class="pl-k">out</span> <span class="pl-c1">STD_LOGIC</span>; <span class="pl-c"><span class="pl-c">--</span> AN1</span>
+        AN2         : <span class="pl-k">out</span> <span class="pl-c1">STD_LOGIC</span>; <span class="pl-c"><span class="pl-c">--</span> AN2</span>
+        AN3         : <span class="pl-k">out</span> <span class="pl-c1">STD_LOGIC</span>; <span class="pl-c"><span class="pl-c">--</span> AN3</span>
+        A           : <span class="pl-k">out</span> <span class="pl-c1">STD_LOGIC</span>; <span class="pl-c"><span class="pl-c">--</span> A</span>
+        B           : <span class="pl-k">out</span> <span class="pl-c1">STD_LOGIC</span>; <span class="pl-c"><span class="pl-c">--</span> B</span>
+        C           : <span class="pl-k">out</span> <span class="pl-c1">STD_LOGIC</span>; <span class="pl-c"><span class="pl-c">--</span> C</span>
+        D           : <span class="pl-k">out</span> <span class="pl-c1">STD_LOGIC</span>; <span class="pl-c"><span class="pl-c">--</span> D</span>
+        E           : <span class="pl-k">out</span> <span class="pl-c1">STD_LOGIC</span>; <span class="pl-c"><span class="pl-c">--</span> E</span>
+        F           : <span class="pl-k">out</span> <span class="pl-c1">STD_LOGIC</span>; <span class="pl-c"><span class="pl-c">--</span> F</span>
+        G           : <span class="pl-k">out</span> <span class="pl-c1">STD_LOGIC</span>; <span class="pl-c"><span class="pl-c">--</span> G</span>
+        P           : <span class="pl-k">out</span> <span class="pl-c1">STD_LOGIC</span>; <span class="pl-c"><span class="pl-c">--</span> P (DP)</span>
+        LED1        : <span class="pl-k">out</span> <span class="pl-c1">STD_LOGIC</span>; <span class="pl-c"><span class="pl-c">--</span> LED1</span>
+        LED2        : <span class="pl-k">out</span> <span class="pl-c1">STD_LOGIC</span>; <span class="pl-c"><span class="pl-c">--</span> LED2</span>
+        LED3        : <span class="pl-k">out</span> <span class="pl-c1">STD_LOGIC</span>; <span class="pl-c"><span class="pl-c">--</span> LED3</span>
+        LED4        : <span class="pl-k">out</span> <span class="pl-c1">STD_LOGIC</span>; <span class="pl-c"><span class="pl-c">--</span> LED4</span>
+        LED5        : <span class="pl-k">out</span> <span class="pl-c1">STD_LOGIC</span>; <span class="pl-c"><span class="pl-c">--</span> LED5</span>
+        HALL        : <span class="pl-k">in</span> <span class="pl-c1">STD_LOGIC</span>  <span class="pl-c"><span class="pl-c">--</span> Hall sensor</span>
     );
 <span class="pl-k">end</span> <span class="pl-en">top</span>;
 
@@ -651,7 +653,7 @@ V Programu se jedná o <code>g_RESISTLOAD</code> a o <code>g_INERTIA_MOMENT</cod
         <span class="pl-k">port</span> <span class="pl-k">map</span>(
             clk             <span class="pl-k">=&gt;</span> CLK100MHZ,
             reset           <span class="pl-k">=&gt;</span> s_reset,
-            hall_sensor_i   <span class="pl-k">=&gt;</span> U13,
+            hall_sensor_i   <span class="pl-k">=&gt;</span> HALL,
             speed_o         <span class="pl-k">=&gt;</span> s_speed,
             distance_o      <span class="pl-k">=&gt;</span> s_distance,
             calories_o      <span class="pl-k">=&gt;</span> s_calories,
@@ -669,11 +671,11 @@ V Programu se jedná o <code>g_RESISTLOAD</code> a o <code>g_INERTIA_MOMENT</cod
             max_speed_i <span class="pl-k">=&gt;</span> s_max_speed,
             button_i    <span class="pl-k">=&gt;</span> btn0,
             reset       <span class="pl-k">=&gt;</span> s_reset,
-            leds_o(<span class="pl-c1">0</span>)   <span class="pl-k">=&gt;</span> U12,
-            leds_o(<span class="pl-c1">1</span>)   <span class="pl-k">=&gt;</span> V12,
-            leds_o(<span class="pl-c1">2</span>)   <span class="pl-k">=&gt;</span> V10,
-            leds_o(<span class="pl-c1">3</span>)   <span class="pl-k">=&gt;</span> V11,
-            leds_o(<span class="pl-c1">4</span>)   <span class="pl-k">=&gt;</span> T13
+            leds_o(<span class="pl-c1">0</span>)   <span class="pl-k">=&gt;</span> LED1,
+            leds_o(<span class="pl-c1">1</span>)   <span class="pl-k">=&gt;</span> LED2,
+            leds_o(<span class="pl-c1">2</span>)   <span class="pl-k">=&gt;</span> LED3,
+            leds_o(<span class="pl-c1">3</span>)   <span class="pl-k">=&gt;</span> LED4,
+            leds_o(<span class="pl-c1">4</span>)   <span class="pl-k">=&gt;</span> LED5
         );
 
     <span class="pl-c"><span class="pl-c">--</span>------------------------------------------------------------------</span>
@@ -687,22 +689,21 @@ V Programu se jedná o <code>g_RESISTLOAD</code> a o <code>g_INERTIA_MOMENT</cod
             data2_i     <span class="pl-k">=&gt;</span> s_data2,
             data3_i     <span class="pl-k">=&gt;</span> s_data3,
             dp_i        <span class="pl-k">=&gt;</span> s_dp,
-            seg_o(<span class="pl-c1">6</span>)    <span class="pl-k">=&gt;</span> E15,
-            seg_o(<span class="pl-c1">5</span>)    <span class="pl-k">=&gt;</span> E16,
-            seg_o(<span class="pl-c1">4</span>)    <span class="pl-k">=&gt;</span> D15,
-            seg_o(<span class="pl-c1">3</span>)    <span class="pl-k">=&gt;</span> C15,
-            seg_o(<span class="pl-c1">2</span>)    <span class="pl-k">=&gt;</span> J17,
-            seg_o(<span class="pl-c1">1</span>)    <span class="pl-k">=&gt;</span> J18,
-            seg_o(<span class="pl-c1">0</span>)    <span class="pl-k">=&gt;</span> K15,
-            dp_o        <span class="pl-k">=&gt;</span> J15,
-            dig_o(<span class="pl-c1">0</span>)    <span class="pl-k">=&gt;</span> D12,
-            dig_o(<span class="pl-c1">1</span>)    <span class="pl-k">=&gt;</span> A11,
-            dig_o(<span class="pl-c1">2</span>)    <span class="pl-k">=&gt;</span> B11,
-            dig_o(<span class="pl-c1">3</span>)    <span class="pl-k">=&gt;</span> G13
+            seg_o(<span class="pl-c1">6</span>)    <span class="pl-k">=&gt;</span> A,
+            seg_o(<span class="pl-c1">5</span>)    <span class="pl-k">=&gt;</span> B,
+            seg_o(<span class="pl-c1">4</span>)    <span class="pl-k">=&gt;</span> C,
+            seg_o(<span class="pl-c1">3</span>)    <span class="pl-k">=&gt;</span> D,
+            seg_o(<span class="pl-c1">2</span>)    <span class="pl-k">=&gt;</span> E,
+            seg_o(<span class="pl-c1">1</span>)    <span class="pl-k">=&gt;</span> F,
+            seg_o(<span class="pl-c1">0</span>)    <span class="pl-k">=&gt;</span> G,
+            dp_o        <span class="pl-k">=&gt;</span> P,
+            dig_o(<span class="pl-c1">0</span>)    <span class="pl-k">=&gt;</span> AN0,
+            dig_o(<span class="pl-c1">1</span>)    <span class="pl-k">=&gt;</span> AN1,
+            dig_o(<span class="pl-c1">2</span>)    <span class="pl-k">=&gt;</span> AN2,
+            dig_o(<span class="pl-c1">3</span>)    <span class="pl-k">=&gt;</span> AN3
         );
+
 <span class="pl-k">end</span> <span class="pl-en">Behavioral</span>;</pre></div>
-<p>Vygenerovat bitstream se nepodařilo kvůli chybě placeru.
-<a href="images/placer_error.png" target="_blank" rel="noopener noreferrer"><img src="images/placer_error.png" alt="" style="max-width:100%;"></a></p>
 <h2>
 <a id="user-content-video" class="anchor" href="#video" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Video</h2>
 <p><a href="https://www.youtube.com/watch?v=75vinimI-LY&amp;feature=youtu.be" rel="nofollow">Link na video prezentace</a></p>
